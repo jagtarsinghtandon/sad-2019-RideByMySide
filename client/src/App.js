@@ -7,7 +7,7 @@ import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
-
+import Search from './Components/Search';
 
 class App extends Component{
   constructor() {
@@ -43,20 +43,27 @@ render()
       { route === 'Profile'
       ? <div>
            <Profile />
-           
+           {/* <Search/> */}
 
         </div>
-      : (
-          route === 'Login'
-          ? <Login onRouteChange={this.onRouteChange}/> 
-          :( route === 'Register'
-              ? <Register onRouteChange={this.onRouteChange}/>
-              : route === 'home'
+      : (route === 'Login' ?
+          <Login onRouteChange={this.onRouteChange}/>
+        
+      : (route === 'Register'?
+               <Register onRouteChange={this.onRouteChange}/>
+        
+       : (route === 'home',
+          <div>
+            <Search />
+          </div> 
             
+          )
         )
-      )
+        )
+       }
+      
 
-      }
+      
       <div >  
               <video className='videoTag' autoPlay loop muted resizeMode={"cover"}>
         <source src={sample} type='video/mp4' />
