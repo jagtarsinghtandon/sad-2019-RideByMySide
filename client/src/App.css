@@ -1,0 +1,29 @@
+.App {
+    text-align: center;
+  }
+
+  .videoTag{
+    top:-350px; 
+    left:0;bottom:0;right:0;
+    position: fixed;
+    z-index: -1;
+    
+  }
+
+  li{
+    padding: 20px;
+  }
+
+  
+
+ .main-nav{
+   list-style: none;
+   display: flex;
+   padding: 0;
+ }
+
+ .navbar{
+  height: 80px;
+ }
+
+ 
