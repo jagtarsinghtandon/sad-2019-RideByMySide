@@ -1,9 +1,10 @@
 import React from 'react';
 
 
-const Search = ({ onRouteChange }) => {
+
+const Search = ({onRouteChange}) => {
     return (
-        <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 right ml3">
+        <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
  
         <div>
         <legend className="f3 fw6 ph0 mh0">Find a Ride</legend>
@@ -13,7 +14,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" placeholder="Search any City"
-                                name="Source"  id="Source"
+                                name="Source"  id="Source" required
                             />
                         </div>
 
@@ -22,7 +23,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" placeholder="Search any City"
-                                name="Destination"  id="Destination"
+                                name="Destination"  id="Destination" required
                             />
                         </div>
 
@@ -39,7 +40,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="date" 
-                                name="Date"  id="Date"
+                                name="Date"  id="Date" required
                             />
                         </div>
                         <div className="">

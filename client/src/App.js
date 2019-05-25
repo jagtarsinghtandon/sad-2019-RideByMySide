@@ -8,6 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
 import Search from './Components/Search';
+import AboutUs from './Components/AboutUs';
+import ContactUs from './Components/ContactUs';
+
 
 class App extends Component{
   constructor() {
@@ -51,15 +54,26 @@ render()
         
       : (route === 'Register'?
                <Register onRouteChange={this.onRouteChange}/>
+
+       : (route === 'AboutUs'?
+                 < AboutUs onRouteChange={this.onRouteChange}/>
+
+      : (route === 'ContactUs'?
+                 < ContactUs onRouteChange={this.onRouteChange}/>      
         
        : (route === 'home',
           <div>
             <Search onRouteChange={this.onRouteChange}/>
           </div> 
             
-          )
+          
+       
         )
-        )
+      )
+      )
+      )
+      )
+      
        }
       
 
