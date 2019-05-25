@@ -32,9 +32,12 @@ const Navigation = ({onRouteChange, isSignedIn}) => {
  
     <div class="navbar-nav" >
     <nav style = {{display:'flex', justifyContent:'flex-end'}}>
-      <li><a class="nav-item nav-link active  f3 fw6  ph0  mh0 pa0" href="home">RideByMySide </a></li>
-      <li><a class="nav-item nav-link active" href="about us">About Us </a></li>
-      <li><a class="nav-item nav-link active" href="contact us">Contact Us </a></li>
+      <li><p onClick={() => onRouteChange('home')} className="nav-item nav-link active pointer f3 fw6  ph0  mh0 pa0" >RideByMySide </p></li>
+      <li>
+        <p onClick={() => onRouteChange('AboutUs')} className="nav-item nav-link dim black active pointer pull  ">About Us </p>
+       
+      </li>
+      <li><p onClick={() => onRouteChange('ContactUs')} className="nav-item nav-link dim black active pull pointer">Contact Us </p></li>
       </nav>
     </div>
     <div class="main-nav">

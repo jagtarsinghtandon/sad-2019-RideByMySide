@@ -3,7 +3,7 @@ import React from 'react';
 
 const Register = ({onRouteChange}) => {
     return(
-        <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 center">
+        <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
             <main className="pa4 black-80">
                 <form className="measure">
                     <fieldset className="ba b--transparent ph0 mh0">
@@ -13,7 +13,10 @@ const Register = ({onRouteChange}) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" 
-                                name="name"  id="name"
+                                name="name"  
+                                id="name"
+                                required
+                                 maxLength="10"
                             />
                         </div>
 
@@ -22,7 +25,10 @@ const Register = ({onRouteChange}) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" 
-                                name="name"  id="name"
+                                name="name" 
+                                 id="name"
+                                 required
+                                 maxLength="10"
                             />
                         </div>
 
@@ -33,7 +39,9 @@ const Register = ({onRouteChange}) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="email" 
-                                name="email-address"  id="email-address"
+                                name="email-address" 
+                                 id="email-address"
+                                 required
                              />
                         </div>
                         <div className="mv3">
@@ -41,7 +49,10 @@ const Register = ({onRouteChange}) => {
                             <input 
                                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                                 type="password"
-                                name="password"  id="password"
+                                name="password"  
+                                id="password"
+                                required
+                                minLength="5" maxLength="8"
                             />
                         </div>
 

@@ -1,27 +1,13 @@
 import React from 'react';
-// import Tilt from 'react-tilt';
 
 
-const Search = ({ onRouteChange }) => {
+
+const Search = ({onRouteChange}) => {
     return (
-        <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 right ml3">
+        <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
  
         <div>
-        {/* <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Source</span>
-            </div>
-            <input type="text" class=".br4 w-20" placeholder="Search any City" aria-label="Username" aria-describedby="basic-addon1" />
-            
-        </div>
-        <br></br>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Destination</span>
-            </div>
-            <input type="text" class=".br4 w-20" placeholder="Search any City" aria-label="Username" aria-describedby="basic-addon1" />
-
-        </div> */}
+        
         <legend className="f3 fw6 ph0 mh0">Find a Ride</legend>
              
         <div className="mt3">
@@ -29,7 +15,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" placeholder="Search any City"
-                                name="Source"  id="Source"
+                                name="Source"  id="Source" required
                             />
                         </div>
 
@@ -38,7 +24,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" placeholder="Search any City"
-                                name="Destination"  id="Destination"
+                                name="Destination"  id="Destination" required
                             />
                         </div>
 
@@ -47,7 +33,7 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="text" placeholder="Football, Movies, Books, etc."
-                                name="Destination"  id="Destination"
+                                name="Destination"  id="Destination" required
                             />
                         </div>
                         <div className="mt3">
@@ -55,17 +41,17 @@ const Search = ({ onRouteChange }) => {
                             <input 
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100" 
                                 type="date" 
-                                name="Date"  id="Date"
+                                name="Date"  id="Date" required
                             />
                         </div>
                         <div className="">
-              <input
-                onClick={() => onRouteChange('Search')}
-                className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                type="submit"
-                value="Search"
-              />
-            </div>
+                            <input
+                                onClick={() => onRouteChange('Register')}
+                                className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                                type="submit"
+                                value="Search"
+                            />
+                        </div>
                         
         </div>
         
