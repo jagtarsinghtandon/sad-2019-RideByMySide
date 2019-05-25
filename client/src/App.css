@@ -14,16 +14,29 @@
     padding: 20px;
   }
 
-  
+  .pull{
+    margin-left: 80px
+  }
 
  .main-nav{
    list-style: none;
    display: flex;
-   padding: 0;
+   
  }
+ 
 
  .navbar{
   height: 80px;
  }
 
- 
+ input:invalid {
+  border: 2px dashed red;
+}
+
+input:valid {
+  border: 2px solid black;
+}
+
+.push{
+  margin-left: auto;
+}

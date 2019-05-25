@@ -3,7 +3,7 @@ import React from 'react';
 
 const Login = ({onRouteChange}) => {
     return(
-        <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 center">
+        <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
         <main className="pa4 black-80">
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -15,6 +15,7 @@ const Login = ({onRouteChange}) => {
                   type="email"
                   name="email-address"
                   id="email-address"
+                  required
                 />
               </div>
 
@@ -25,6 +26,8 @@ const Login = ({onRouteChange}) => {
                   type="password"
                   name="password"
                   id="password"
+                  required
+                  minLength="5" maxLength="8"
                 />
               </div>
 

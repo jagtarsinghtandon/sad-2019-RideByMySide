@@ -46,7 +46,11 @@ render()
       { route === 'Profile'
       ? <div>
            <Profile />
+<<<<<<< HEAD
+          
+=======
            {/* <Search/> */} 
+>>>>>>> jagtar_branch
 
         </div>
       : (route === 'Login' ?
