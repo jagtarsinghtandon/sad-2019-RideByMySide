@@ -9,6 +9,8 @@ var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
 var app = express();
 
+var SearchRouter = require("./routes/searchRide");
+
 var mysql = require('mysql');
  
 const bodyparser = require('body-parser');
@@ -29,6 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/testAPI", testAPIRouter);
+
+
+app.use(SearchRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -67,5 +72,6 @@ db.connect((err) => {
         throw err;
     }
     console.log('MySql Connected...');
+    app.set('mysql',db)
 });
  
