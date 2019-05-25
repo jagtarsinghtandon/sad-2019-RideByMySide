@@ -43,7 +43,7 @@ render()
       { route === 'Profile'
       ? <div>
            <Profile />
-           {/* <Search/> */}
+           {/* <Search/> */} 
 
         </div>
       : (route === 'Login' ?
@@ -54,7 +54,7 @@ render()
         
        : (route === 'home',
           <div>
-            <Search />
+            <Search onRouteChange={this.onRouteChange}/>
           </div> 
             
           )
