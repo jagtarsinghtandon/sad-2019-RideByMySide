@@ -9,6 +9,12 @@ var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
 var app = express();
 
+var mysql = require('mysql');
+ 
+const bodyparser = require('body-parser');
+app.use(bodyparser.json());
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -44,3 +50,22 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+///Create Connection to MySql
+
+const db = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'password',
+    database : 'ridebymysidedb',
+    insecureAuth : true
+});
+
+// Connect
+db.connect((err) => {
+    if(err){
+        throw err;
+    }
+    console.log('MySql Connected...');
+});
+ 
