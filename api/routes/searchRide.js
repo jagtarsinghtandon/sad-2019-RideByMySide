@@ -12,18 +12,19 @@ router.post('/search', (req, res) => {
 
     var mysql = req.app.get('mysql');
 
-        var queryString = "SELECT * FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
+        var queryString = "SELECT SOURCE, DESTINATION,DATE_TIME_OF_RIDE FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
         var filter = [source, destination];
         console.log(this.state);
         mysql.query(queryString, filter, (err, rows, fields)=>{
             //proces s results
             
         if (!err){
-        res.send(rows);
-        res.json('sucess');
+            res.json({rides:rows})
+        //res.json{(rows)};
+        //res.json('sucess');
         }
         else
-        console.log(' Emp data is not showing \n ERROR :' + err);
+        console.log(' ride data is not showing \n ERROR :' + err);
 })
 });
 

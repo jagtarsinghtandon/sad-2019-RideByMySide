@@ -1,11 +1,13 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
+//import SearchedRides from './SearchedRides';
+
 
 class Search extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Source: '',
-            Destination: '',
+            source: '',
+            dest: '',
             rides: []
 
         }
@@ -14,65 +16,50 @@ class Search extends Component {
 
     }
     onSourceChange = (event) => {
-        this.setState({Source: event.target.value})
-      }
-    
+        this.setState({ source: event.target.value })
+    }
+
     onDestinationChange = (event) => {
-        this.setState({Destination: event.target.value})
-      }
+        this.setState({ dest: event.target.value })
+    }
     // onChange(e) {
     //     this.setState({ [e.target.name]: e.target.value })
     // }
 
     onSubmit = () => {
-        // event.preventDefault();
-
-        // console.log(this.state);
+        console.log("in submit")
         fetch('http://localhost:9000/search', {
-            method: 'POST',
-           
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                Source: this.state.Source,
-                Destination: this.state.Destination
-              }),
-        })   
-        .then(response => response.json())
-        .then(data => {
-            if (data === 'success')
-            {
-                this.props.onRouteChange('home'); 
-            }
-        })
-        // .then (ridedata => this.setState({ rides: ridedata}))
-                   // console.log(ride
-            // .then(res => {
-            //     if (res.status === 200) {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        Source: this.state.source,
+        Destination: this.state.dest
+      })
+    })
+    // .then(res => {
+    //     if (res.status === 200) {
+    //     console.log("sucess")
+    //       //localStorage.setItem('usertoken', res.data)
 
-                        
-                    
-            //             (ridedata => this.setState({ rides: ridedata }));
-                    
-            //     } else {
-            //         const error = new Error(res.error);
-            //         throw error;
-            //     }
-            // })
-            .catch(err => {
-                console.error(err);
-                alert('Error logging in please try again');
-            });
-    }
+    //       //this.props.onRouteChange('SearchedRides');
+    //     }
+    // })
+    .then(response => response.json())
+    .then(ridedata => this.setState({ rides: ridedata.rides}))
+    // .then(this.props.onRouteChange('SearchedRides'))
+    .catch(err => {
+        console.error(err);     
+        alert('Error logging in please try again');
+      });
+}
 
 
     render() {
         const { onRouteChange } = this.props;
         //const { onSubmit } = this.setState;
-        
+
         const rides = this.state;
-        console.log(rides[0]);
+        console.log(rides);
         return (
             <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
 
@@ -95,8 +82,8 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Search any City"
-                            name="Destination" id="Destination" required value={this.state.email} 
-                             onChange={this.onDestinationChange}
+                            name="Destination" id="Destination" required value={this.state.email}
+                            onChange={this.onDestinationChange}
                         />
                     </div>
 
@@ -105,7 +92,7 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Football, Movies, Books, etc."
-                            name="Destination" id="Destination" required
+                            name="Destination" id="Destination" 
                         />
                     </div>
                     <div className="mt3">
@@ -113,24 +100,27 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="date"
-                            name="Date" id="Date" required
+                            name="Date" id="Date" 
                         />
                     </div>
                     <div className="">
-                    <input
+                        <input
 
-                            onClick={this.onSubmit}
-                            // onClick={()=>onSubmit()}
+                           // onClick={() => onRouteChange('SearchedRides')}
+                             onClick={this.onSubmit}
                             className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                             type="submit"
                             value="Search"
                         />
-                       
+
                     </div>
 
                 </div>
 
             </article>
+
+
+     
         );
     }
 }
