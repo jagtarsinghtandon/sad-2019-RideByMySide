@@ -3,13 +3,14 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Navigation from './Components/Navigation';
 import Profile from './Components/Profile';
+import Search from './Components/Search';
+import AboutUs from './Components/AboutUs';
+import ContactUs from './Components/ContactUs';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
-import Search from './Components/Search';
-import AboutUs from './Components/AboutUs';
-import ContactUs from './Components/ContactUs';
+
 
 
 class App extends Component{
@@ -17,7 +18,7 @@ class App extends Component{
   super();
   this.state = { 
   route : 'home',
-  isSignedIn: false
+  
 
   };
   
@@ -25,32 +26,21 @@ class App extends Component{
 
 
 onRouteChange = (route) => {
-  // if (route === 'Logout')
-  // {
-  //   this.setState({isSignedIn:false})
-  // }
-  // else if (route === 'Profile')
-  // {
-  //   this.setState({isSignedIn:true})
-  // }
+  
     this.setState({route: route}); 
 }
 
 render() 
 {
-  const { isSignedIn, route} = this.state;
+  const { route} = this.state;
   return (
    
     <div className="App">
-      <Navigation isSignedIn={isSignedIn} onRouteChange = {this.onRouteChange} />
+      <Navigation  onRouteChange = {this.onRouteChange} />
       { route === 'Profile'
       ? <div>
            <Profile />
-<<<<<<< HEAD
           
-=======
-           {/* <Search/> */} 
->>>>>>> jagtar_branch
 
         </div>
       : (route === 'Login' ?
@@ -83,7 +73,7 @@ render()
 
       
       <div >  
-              <video className='videoTag' autoPlay loop muted resizeMode={"cover"}>
+              <video className='videoTag' autoPlay loop muted resizemode={"cover"}>
         <source src={sample} type='video/mp4' />
         </video>
         </div>
