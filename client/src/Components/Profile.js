@@ -3,7 +3,10 @@ import React from 'react';
 
 const Profile = () => {
     return(
-        <legend className="f4 fw6 ph0 mh0">Profile</legend>
+        <nav className="navbar  navbar-light bg-primary ">
+         <legend className = "f4 fw6">Profile</legend> 
+        </nav>
+
         
         
     );
