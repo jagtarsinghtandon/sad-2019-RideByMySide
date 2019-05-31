@@ -5,7 +5,7 @@ const bcrypt= require("bcrypt-nodejs")
 login : [
     {
     hash: '',
-    EMAIL: 'ankit@gmail.com',
+    EMAIL: '',
     }
 ]
 
@@ -26,19 +26,35 @@ const email = req.body.email;
 
 
 
-var queryString = "INSERT INTO person (FIRST_NAME,LAST_NAME,EMAIL,PASSWORD) VALUES (?,?,?,?)"
-        var filter = [first_name,last_name, email,password];
+
+    const emailCheckQuery="SELECT EMAIL FROM person WHERE EMAIL= ?;";
+    const filter2 = [email];
+    console.log(this.state);
+       mysql.query(emailCheckQuery, filter2, (err, rows, fields)=>{
+
+
+      if (rows.length ==1){
+    console.log("email existssssss");
+        res.status(500).json({registers:rows})
+    }
+    
+ else
+    {
+        const queryString = "INSERT INTO person (FIRST_NAME,LAST_NAME,EMAIL,PASSWORD) VALUES (?,?,?,?)"
+        const filter = [first_name,last_name, email,password];
         console.log(this.state);
         mysql.query(queryString, filter, (err, rows, fields)=>{
            
             
         if (!err){
-            res.json({register:rows})
-        //res.json('sucess');
+            res.json({registers:rows})
         }
         else
         console.log('  data is not showing \n ERROR :' + err);
 })
+    }
+       })
+    
 });
 
 

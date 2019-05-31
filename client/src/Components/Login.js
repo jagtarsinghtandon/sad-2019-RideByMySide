@@ -6,7 +6,7 @@ class Login extends Component {
       this.state = {
           email: '',
           password: '',
-
+          logins: []
 
       }
       this.onChange = this.onChange.bind(this)
@@ -14,6 +14,7 @@ class Login extends Component {
      
   }
   
+
 
   onChange (e) {
       this.setState({ [e.target.name]: e.target.value })
@@ -31,14 +32,17 @@ class Login extends Component {
     })
     
       .then(response => response.json())
-    .then(logindata => this.setState({ login: logindata.login},console.log('success')))
+    .then((logindata) => {this.setState({ logins: logindata.logins},console.log('success'))
+            alert('Successfully logged in')
+            this.props.onRouteChange('Profile')
+  })
    
      
     .catch(err => {
         console.error(err);     
         alert('Error logging in please try again');
       });
-         
+      
   }
 
 
@@ -46,8 +50,10 @@ class Login extends Component {
 render() {
 
   const { onRouteChange } = this.props;
-  const login = this.state;
-        console.log(login); 
+
+  const logins = this.state;
+  console.log(logins); 
+
     return(
         <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
         <main className="pa4 black-80">
