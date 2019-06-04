@@ -31,17 +31,19 @@ class Login extends Component {
       })
     })
     
-      .then(response => response.json())
-    .then((logindata) => {this.setState({ logins: logindata.logins},console.log('success'))
-            alert('Successfully logged in')
+
+
+  .then((response) => {
+    response.json()
+    if(response.status === 500)
+    alert("invalid email or password")
+    else
+    {
+        this.setState({ logins: response.logins},console.log('success'))
+        alert('Successfully logged in')
             this.props.onRouteChange('Profile')
-  })
-   
-     
-    .catch(err => {
-        console.error(err);     
-        alert('Error logging in please try again');
-      });
+    }
+})
       
   }
 
@@ -68,7 +70,8 @@ render() {
                   name="email"
                   id="email"
                   placeholder="Enter email"
-                  required
+                  required 
+                  pattern="[^]+@[^]+[.][a-z]{2,63}$"
                   value={this.state.email}
                   onChange={this.onChange}
                 />  
@@ -82,14 +85,14 @@ render() {
                   name="password"
                   id="password"
                   placeholder="Enter password(max. 8 characters)"
-                  
-                  
-                  required
-                  minLength="5" maxLength="8"
+                  required 
+                  minLength="5"  maxLength="8" 
                   value={this.state.password}
                   onChange={this.onChange}
                 />
               </div>
+
+              
 
             </fieldset>
 

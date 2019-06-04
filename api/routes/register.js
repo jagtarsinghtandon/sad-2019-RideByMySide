@@ -1,26 +1,25 @@
 const express = require("express")
 const register = express.Router()
-const bcrypt= require("bcrypt-nodejs")
+const bcrypt= require("bcrypt")
 
-login : [
-    {
-    hash: '',
-    EMAIL: '',
-    }
-]
+
 
 
 register.post('/register',(req,res)=>{
 
-   
-bcrypt.hash("PASSWORD", null, null, function(err, hash) {
-    console.log(hash);
-});
+    let hash = bcrypt.hashSync('req.body.password', 8);
+    // bcrypt.hash(password, salt, function(err, hash) {
+    //     query = "insert query with generated crypt password";
+    //     pool.query(query, (err, res) => {
+    //         console.log(err, res);
+    //     })
+    // });
+       
 
 var mysql = req.app.get('mysql');
 
 const  first_name =  req.body.first_name;
-const password = req.body.password;
+const password = hash;
 const last_name = req.body.last_name;
 const email = req.body.email;
 
