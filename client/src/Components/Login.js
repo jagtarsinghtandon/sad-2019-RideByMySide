@@ -32,13 +32,31 @@ class Login extends Component {
     
       .then(response => response.json())
     .then(logindata => this.setState({ login: logindata.login},console.log('success')))
-   
+    this.props.onRouteChange('Profile'); 
      
-    .catch(err => {
-        console.error(err);     
-        alert('Error logging in please try again');
-      });
+    
+    
+     console.log("in submit")
+     fetch('http://localhost:9000/profile', {
+         method: 'post',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+             Source: this.state.source,
+             Destination: this.state.dest
+         })
+     })
+         .then(response => response.json())
+         .then((profiledata) => {
+             this.setState({ profiles: profiledata.profiles })
+             // this.setState({route:'SearchedRides'})
+             //route= 'SearchedRides'
+             this.props.onRouteChange('SearchedRides')
+             //  this.props.getSearchedRides(rides)
+
+         })
          
+         
+        
   }
 
 

@@ -9,7 +9,7 @@ var bodyparser = require("body-parser");
 var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
-
+var profileRouter = require("./routes/profile");
 
 
 
@@ -30,12 +30,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(loginRouter);
 app.use(registerRouter);
+app.use(profileRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   next(createError(404));
-});
+});*/
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -70,6 +71,3 @@ db.connect((err) => {
 
 
 module.exports = app;
-
-
- 
