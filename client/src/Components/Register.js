@@ -8,6 +8,9 @@ class Register extends Component {
             last_name: '',
             email: '',
             password: '',
+            registers: []
+            
+            
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -30,21 +33,28 @@ class Register extends Component {
       })
     })
     
-      .then(response => response.json())
-    .then(registerdata => this.setState({ register: registerdata.register},console.log('success')))
+    .then((response) => {
+        response.json()
+        if(response.status === 500)
+        alert("User already exists")
+        else
+        {
+            this.setState({ registers: response.registers},console.log('success'))
+        }
+    })
    
      
-    .catch(err => {
-        console.error(err);     
-        alert('Error logging in please try again');
-      });
+   
       
     }
 
 
     render(){
-        const register = this.state;
-        console.log(register); 
+
+        const registers = this.state;
+        
+        console.log(registers); 
+        
 
     return(
         <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">

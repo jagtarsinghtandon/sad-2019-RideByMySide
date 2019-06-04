@@ -6,7 +6,7 @@ class Login extends Component {
       this.state = {
           email: '',
           password: '',
-
+          logins: []
 
       }
       this.onChange = this.onChange.bind(this)
@@ -14,6 +14,7 @@ class Login extends Component {
      
   }
   
+
 
   onChange (e) {
       this.setState({ [e.target.name]: e.target.value })
@@ -30,6 +31,7 @@ class Login extends Component {
       })
     })
     
+<<<<<<< HEAD
       .then(response => response.json())
     .then(logindata => this.setState({ login: logindata.login},console.log('success')))
     this.props.onRouteChange('Profile'); 
@@ -57,6 +59,22 @@ class Login extends Component {
          
          
         
+=======
+
+
+  .then((response) => {
+    response.json()
+    if(response.status === 500)
+    alert("invalid email or password")
+    else
+    {
+        this.setState({ logins: response.logins},console.log('success'))
+        alert('Successfully logged in')
+            this.props.onRouteChange('Profile')
+    }
+})
+      
+>>>>>>> 07a044e95b905d8a08d417ea21da43a487f4cc29
   }
 
 
@@ -64,8 +82,10 @@ class Login extends Component {
 render() {
 
   const { onRouteChange } = this.props;
-  const login = this.state;
-        console.log(login); 
+
+  const logins = this.state;
+  console.log(logins); 
+
     return(
         <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
         <main className="pa4 black-80">
@@ -80,7 +100,8 @@ render() {
                   name="email"
                   id="email"
                   placeholder="Enter email"
-                  required
+                  required 
+                  pattern="[^]+@[^]+[.][a-z]{2,63}$"
                   value={this.state.email}
                   onChange={this.onChange}
                 />  
@@ -94,14 +115,14 @@ render() {
                   name="password"
                   id="password"
                   placeholder="Enter password(max. 8 characters)"
-                  
-                  
-                  required
-                  minLength="5" maxLength="8"
+                  required 
+                  minLength="5"  maxLength="8" 
                   value={this.state.password}
                   onChange={this.onChange}
                 />
               </div>
+
+              
 
             </fieldset>
 

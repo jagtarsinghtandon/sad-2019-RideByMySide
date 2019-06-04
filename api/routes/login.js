@@ -1,6 +1,6 @@
 const express = require("express")
 const login = express.Router()
-
+const bcrypt= require("bcrypt")
 
 login.post('/login',(req,res)=>{
 
@@ -9,35 +9,46 @@ login.post('/login',(req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
     
-    // $sql = mysql_query("SELECT EMAIL FROM person  WHERE EMAIL = '?'");
+   // bcrypt.compareSync('req.body.password', hash);
 
-    // if(mysql_num_rows($sql)>0){
-    //     die ("EMAIL taken. Please pick a different EMAIL");
-    // }
+//    const query = "insert query with generated crypt password";
+//    pool.query(query, (err, res) => {
+//        const dbPsw = res.rows[0].hash_psw; // db password
+//        bcrypt.compare(password, dbPsw, function(err, result) {
+//            if (err)
+//                console.log(err);
+//            else if (result)
+//                console.log("password match");
+//            else
+//                console.log("not match");
+//        });
+//    })
 
-//     $sql=mysql_query("SELECT FROM person (email, password) WHERE email=$email");
-//  if(mysql_num_rows($sql)>=1)
-//    {
-//     echo"email already exists";
-//    }
-//  else
-//     {
-//    //insert query goes here
-//     }
-    
+   const CheckQuery = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
+    const filter1 = [email,password];
+    console.log(this.state);
+       mysql.query(CheckQuery, filter1, (err, rows, fields)=>{
+    if (rows.length ==0){
+        console.log("invalid email or password ");
+            res.status(500).json({logins:rows})
+           
+        }
+        
+    else{
     var queryString = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
             var filter = [email,password];
             console.log(this.state);
-            mysql.query(queryString, filter, (err, rows, fields)=>{
-               
-                
+            mysql.query(queryString, filter, (err, rows, fields)=>{    
             if (!err){
-                res.json({login:rows})
-            //res.json('sucess');
+                res.json({logins:rows}) 
             }
             else
             console.log('  data is not showing \n ERROR :' + err);
     })
+}
+       })
+     
+
     });
 
 
