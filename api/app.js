@@ -5,15 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
 var app = express();
-
-var SearchRouter = require("./routes/searchRide");
-
 var bodyparser = require("body-parser");
 var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
-
+var searchRideRouter = require("./routes/searchRide");
+//var createRideRouter = require("./routes/createRide");
 
 
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -34,12 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
+app.use(searchRideRouter);
 
-
-// catch 404 and forward to error handler
-/*app.use(function(req, res, next) {
+ //catch 404 and forward to error handler
+app.use(function(req, res, next) {
   next(createError(404));
-});*/
+});
 
 // error handler
 app.use(function(err, req, res, next) {

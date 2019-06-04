@@ -31,35 +31,6 @@ class Login extends Component {
       })
     })
     
-<<<<<<< HEAD
-      .then(response => response.json())
-    .then(logindata => this.setState({ login: logindata.login},console.log('success')))
-    this.props.onRouteChange('Profile'); 
-     
-    
-    
-     console.log("in submit")
-     fetch('http://localhost:9000/profile', {
-         method: 'post',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-             Source: this.state.source,
-             Destination: this.state.dest
-         })
-     })
-         .then(response => response.json())
-         .then((profiledata) => {
-             this.setState({ profiles: profiledata.profiles })
-             // this.setState({route:'SearchedRides'})
-             //route= 'SearchedRides'
-             this.props.onRouteChange('SearchedRides')
-             //  this.props.getSearchedRides(rides)
-
-         })
-         
-         
-        
-=======
 
 
   .then((response) => {
@@ -74,7 +45,6 @@ class Login extends Component {
     }
 })
       
->>>>>>> 07a044e95b905d8a08d417ea21da43a487f4cc29
   }
 
 

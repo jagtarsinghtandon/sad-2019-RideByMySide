@@ -17,7 +17,6 @@ const queryString = "SELECT EMAIL,PASSWORD FROM ridebymysidedb.person WHERE EMAI
                 
             if (!err){
                 res.json({profile:rows})
-            //res.json('sucess');
             }
             else
             console.log('  data is not showing \n ERROR :' + err);
