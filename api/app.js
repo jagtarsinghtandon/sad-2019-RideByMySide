@@ -4,18 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require("cors");
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testAPIRouter = require("./routes/testAPI");
 var app = express();
 
 var SearchRouter = require("./routes/searchRide");
 
+var bodyparser = require("body-parser");
 var mysql = require('mysql');
- 
-const bodyparser = require('body-parser');
-app.use(bodyparser.json());
+var loginRouter = require("./routes/login");
+var registerRouter = require("./routes/register");
 
+
+
+
+app.use(bodyparser.urlencoded({ extended: false }));
+
+app.use(bodyparser.json());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,12 +31,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/testAPI", testAPIRouter);
+app.use(loginRouter);
+app.use(registerRouter);
 
 
-app.use(SearchRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -50,20 +51,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-
-
-
-module.exports = app;
-
 ///Create Connection to MySql
 
 const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'password',
-    database : 'ridebymysidedb',
-    insecureAuth : true
+  host     : 'localhost',
+  user     : 'root',
+  password : 'password',
+  database : 'ridebymysidedb',
+  insecureAuth : true
 });
 
 // Connect
@@ -74,4 +69,10 @@ db.connect((err) => {
     console.log('MySql Connected...');
     app.set('mysql',db)
 });
+
+
+
+module.exports = app;
+
+
  

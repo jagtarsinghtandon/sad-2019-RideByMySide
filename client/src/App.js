@@ -3,15 +3,16 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Navigation from './Components/Navigation';
 import Profile from './Components/Profile';
+import Search from './Components/Search';
+import AboutUs from './Components/AboutUs';
+import ContactUs from './Components/ContactUs';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
-import Search from './Components/Search';
-import AboutUs from './Components/AboutUs';
-import ContactUs from './Components/ContactUs';
 import { PropTypes } from 'react'
 import RideList from './Components/RideList';
+
 
 
 class App extends Component {
@@ -25,11 +26,10 @@ class App extends Component {
       dest: '',
       fetchedRides:[]
       // fetchedRidesLength:''
-
-    };
+  
 
   }
-
+  }
 
   onRouteChange = (route) => {
     // if (route === 'Logout')
@@ -162,4 +162,6 @@ class App extends Component {
     );
   }
 }
+
+
 export default App;
