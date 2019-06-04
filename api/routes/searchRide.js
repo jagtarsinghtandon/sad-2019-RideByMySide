@@ -16,12 +16,11 @@ router.post('/search', (req, res) => {
         var filter = [source, destination];
         console.log(this.state);
         mysql.query(queryString, filter, (err, rows, fields)=>{
-            //proces s results
+          
             
         if (!err){
             res.json({rides:rows})
-        //res.json{(rows)};
-        //res.json('sucess');
+
         }
         else
         console.log(' ride data is not showing \n ERROR :' + err);

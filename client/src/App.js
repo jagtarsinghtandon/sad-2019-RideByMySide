@@ -10,7 +10,8 @@ import './App.css';
 import Search from './Components/Search';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
-import SearchedRides from './Components/SearchedRides';
+import { PropTypes } from 'react'
+import RideList from './Components/RideList';
 
 
 class App extends Component {
@@ -18,7 +19,12 @@ class App extends Component {
     super();
     this.state = {
       route: 'home',
-      isSignedIn: false
+      isSignedIn: false,
+      searchedRides: [],
+      source: '',
+      dest: '',
+      fetchedRides:[]
+      // fetchedRidesLength:''
 
     };
 
@@ -36,9 +42,46 @@ class App extends Component {
     // }
     this.setState({ route: route });
   }
+  
+
+  // getSearchedRides = (fetchedRides) => {
+  //       this.setState({ searchedRides: fetchedRides})
+
+
+  //      this.setState({ route: 'SearchedRides'})
+   
+  // } 
+  onSubmitSearch = (source, dest) => {
+    console.log("in submit" +source +dest)
+    
+    fetch('http://localhost:9000/search', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            Source: source,
+            Destination: dest,
+           
+        })
+    })
+
+          .then(response => response.json())
+          .then(ridedata => this.setState({ fetchedRides: ridedata.rides})); 
+          this.setState({ route: "SearchedRides" });
+          
+        
+        }
+
+        
 
   render() {
-    const { isSignedIn, route } = this.state;
+    const { route, searchedRides, rides, fetchedRides, isSignedIn } = this.state;
+    
+    // console.log("searchingggggggggggggggggg"+ fetchedRides.fetchedRides +source +dest );
+    console.log("length dekh" +fetchedRides);
+    console.log("length dekh" +fetchedRides.length);
+    var fetchedRidesLength = fetchedRides.length;
+    
+    // console.log("nayaaaa" +searchedRides.fetchedRides[1])
     return (
 
       <div className="App">
@@ -62,11 +105,11 @@ class App extends Component {
                   < ContactUs onRouteChange={this.onRouteChange} />
 
                   : (route === 'SearchedRides' ?
-                  < SearchedRides onRouteChange={this.onRouteChange} />
+                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}  />
 
                   : (route === 'home',
                     <div>
-                      <Search onRouteChange={this.onRouteChange} />
+                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}/>
                     </div>
 
 
@@ -78,6 +121,7 @@ class App extends Component {
           )
 
         }
+
 
 
 

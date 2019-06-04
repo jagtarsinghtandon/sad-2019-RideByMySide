@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-//import SearchedRides from './SearchedRides';
+    import React, { Component } from 'react';
+import { PropTypes } from 'react'
 
 
 class Search extends Component {
@@ -8,13 +8,16 @@ class Search extends Component {
         this.state = {
             source: '',
             dest: '',
-            rides: []
+            fetchedRides:[]
 
         }
+
+
         // this.onChange = this.onRouteChange.bind(this)
-        // this.onSubmit = this.onSubmit.bind(this)
+        // this.onSubmit = this.onSubmit.bind(this)s
 
     }
+
     onSourceChange = (event) => {
         this.setState({ source: event.target.value })
     }
@@ -22,45 +25,19 @@ class Search extends Component {
     onDestinationChange = (event) => {
         this.setState({ dest: event.target.value })
     }
-    // onChange(e) {
-    //     this.setState({ [e.target.name]: e.target.value })
-    // }
+  
 
-    onSubmit = () => {
-        console.log("in submit")
-        fetch('http://localhost:9000/search', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        Source: this.state.source,
-        Destination: this.state.dest
-      })
-    })
-    // .then(res => {
-    //     if (res.status === 200) {
-    //     console.log("sucess")
-    //       //localStorage.setItem('usertoken', res.data)
-
-    //       //this.props.onRouteChange('SearchedRides');
-    //     }
-    // })
-    .then(response => response.json())
-    .then(ridedata => this.setState({ rides: ridedata.rides}))
-    // .then(this.props.onRouteChange('SearchedRides'))
-    .catch(err => {
-        console.error(err);     
-        alert('Error logging in please try again');
-      });
-}
 
 
     render() {
-        const { onRouteChange } = this.props;
-        //const { onSubmit } = this.setState;
-
-        const rides = this.state;
-        console.log(rides);
+        const {fetchedRides, source, dest} = this.state;
+        
+        console.log(fetchedRides +"@@@@@@@" +source +dest );
+        
+        const { onRouteChange,onSubmitSearch } = this.props;
+      
         return (
+            
             <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
 
                 <div>
@@ -92,7 +69,7 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Football, Movies, Books, etc."
-                            name="Destination" id="Destination" 
+                            name="Destination" id="Destination"
                         />
                     </div>
                     <div className="mt3">
@@ -100,14 +77,14 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="date"
-                            name="Date" id="Date" 
+                            name="Date" id="Date"
                         />
                     </div>
                     <div className="">
-                        <input
+                        <input 
+                            
+                            onClick={() => onSubmitSearch(source,  dest)}
 
-                           // onClick={() => onRouteChange('SearchedRides')}
-                             onClick={this.onSubmit}
                             className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                             type="submit"
                             value="Search"
@@ -115,14 +92,17 @@ class Search extends Component {
 
                     </div>
 
+    
                 </div>
 
             </article>
 
 
-     
+
         );
     }
 }
 
+
 export default Search;
+
