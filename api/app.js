@@ -9,7 +9,7 @@ var bodyparser = require("body-parser");
 var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
-//var createRideRouter = require("./routes/createRide");
+var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
 
 
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(loginRouter);
 app.use(registerRouter);
-//app.use(createRideRouter);
+app.use(profileRouter);
 app.use(searchRideRouter);
 
 // catch 404 and forward to error handler
