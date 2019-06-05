@@ -1,5 +1,4 @@
     import React, { Component } from 'react';
-import { PropTypes } from 'react'
 
 
 class Search extends Component {
@@ -34,11 +33,11 @@ class Search extends Component {
         
         console.log(fetchedRides +"@@@@@@@" +source +dest );
         
-        const { onRouteChange,onSubmitSearch } = this.props;
+        const { onSubmitSearch } = this.props;
       
         return (
             
-            <article class="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
+            <article className="br3 ph4 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
 
                 <div>
 

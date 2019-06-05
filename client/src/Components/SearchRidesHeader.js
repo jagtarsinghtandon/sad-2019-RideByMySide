@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import profile from './profile3.png';
-import profile2 from './profile2.jpg';
+import React from 'react';
 
 
 const SearchedRidesHeader = ({length}) => {
     return (    
-                    <div  class=" ">
+                    <div  className=" ">
                         {(length <= 0 
                         ? 
                          <legend className="f3 fw6 ph0 mh0">No Rides available</legend>
@@ -15,15 +13,15 @@ const SearchedRidesHeader = ({length}) => {
                         )
                         }
                         
-                            <table class="f6 w-100 ph4 mw8 center bg-white" cellspacing="2">
+                            <table className="f6 w-100 ph4 mw8 center bg-white" cellspacing="2">
                                 <thead>
-                                    <tr class="stripe-dark">
+                                    <tr className="stripe-dark">
                                         
-                                     <th class="fw6 tl pa3 ma3 bg-white right">Profile Picture</th>
-                                 <th class="fw6 tl pa3 bg-white right">Name</th>
-                                      <th class="fw6 tl pa3  bg-white right">      Source</th>
-                                         <th class="fw6 tl pa3 ma3 bg-white right">      Destintation</th>
-                                         <th class="fw6 tl pa3 bg-white right">  Date of Travel</th>
+                                     <th className="fw6 tl pa3 ma3 bg-white right">Profile Picture</th>
+                                 <th className="fw6 tl pa3 bg-white right">Name</th>
+                                      <th className="fw6 tl pa3  bg-white right">      Source</th>
+                                         <th className="fw6 tl pa3 ma3 bg-white right">      Destintation</th>
+                                         <th className="fw6 tl pa3 bg-white right">  Date of Travel</th>
                                      </tr>
                                  </thead>
                              </table>
