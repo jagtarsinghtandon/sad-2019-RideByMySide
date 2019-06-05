@@ -11,7 +11,7 @@ var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
-
+//var createRideRouter = require("./routes/createRide");
 
 
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -34,7 +34,7 @@ app.use(registerRouter);
 app.use(profileRouter);
 app.use(searchRideRouter);
 
-// catch 404 and forward to error handler
+ //catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
@@ -72,6 +72,3 @@ db.connect((err) => {
 
 
 module.exports = app;
-
-
- 
