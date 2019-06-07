@@ -1,7 +1,7 @@
 const express = require("express")
 const register = express.Router()
 const bcrypt= require("bcrypt")
-
+const Person = require("../models/Person")
 
 
 
@@ -23,7 +23,9 @@ const password = hash;
 const last_name = req.body.last_name;
 const email = req.body.email;
 
-
+const err = (err)=>{
+    console.error("Error: ",err);
+}
 
 
     const emailCheckQuery="SELECT EMAIL FROM person WHERE EMAIL= ?;";
@@ -39,10 +41,11 @@ const email = req.body.email;
     
  else
     {
-        const queryString = "INSERT INTO person (FIRST_NAME,LAST_NAME,EMAIL,PASSWORD) VALUES (?,?,?,?)"
-        const filter = [first_name,last_name, email,password];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
+        const person = Person.create({firstname:first_name,lastname:last_name,email:email,password:password}).catch(err);
+        // const queryString = "INSERT INTO person (FIRST_NAME,LAST_NAME,EMAIL,PASSWORD) VALUES (?,?,?,?)"
+        // const filter = [first_name,last_name, email,password];
+        // console.log(this.state);
+        // mysql.query(queryString, filter, (err, rows, fields)=>{
            
             
         if (!err){
@@ -50,7 +53,7 @@ const email = req.body.email;
         }
         else
         console.log('  data is not showing \n ERROR :' + err);
-})
+    // })
     }
        })
     

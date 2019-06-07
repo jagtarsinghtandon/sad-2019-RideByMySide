@@ -7,12 +7,14 @@ var cors = require("cors");
 var app = express();
 var bodyparser = require("body-parser");
 var mysql = require('mysql');
+var Sequelize = require('sequelize');
+// var person = require("./models/Person");
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
 //var createRideRouter = require("./routes/createRide");
-
+var con = require("./bin/connection");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 
@@ -33,6 +35,8 @@ app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
 app.use(searchRideRouter);
+// app.use(con);
+// app.use(person);
 
  //catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,25 +53,30 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+// const sequelize = new  Sequelize("ridebymyside","root","password", {host:"127.0.0.1", dialect: "mysql", 
+// operatorsAliases: false});
 
+// app.set('sequelize',sequelize)
 ///Create Connection to MySql
 
-const db = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'password',
-  database : 'ridebymysidedb',
-  insecureAuth : true
-});
 
-// Connect
-db.connect((err) => {
-    if(err){
-        throw err;
-    }
-    console.log('MySql Connected...');
-    app.set('mysql',db)
-});
+
+// const db = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : 'password',
+//   database : 'ridebymysidedb',
+//   insecureAuth : true
+// });
+
+// // Connect
+// db.connect((err) => {
+//     if(err){
+//         throw err;
+//     }
+//     console.log('MySql Connected...');
+//     app.set('mysql',db)
+// });
 
 
 

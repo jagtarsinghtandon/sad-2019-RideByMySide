@@ -7,6 +7,9 @@ import Search from './Components/Search';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
 import RideList from './Components/RideList';
+import Rides from './Components/Rides';
+import RideRequests from './Components/RideRequests';
+import AddRides from './Components/AddRides';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
@@ -66,13 +69,15 @@ class App extends Component {
     return (
 
       <div className="App">
+        
         <Navigation  onRouteChange={this.onRouteChange} />
-        {route === 'Profile'
-          ? <div>
-            <Profile />
+        
+        {route === 'Profile' ?
+          
+            <Profile  onRouteChange={this.onRouteChange} />
 
 
-          </div>
+          
           : (route === 'Login' ?
             <Login onRouteChange={this.onRouteChange} />
 
@@ -84,6 +89,15 @@ class App extends Component {
 
                 : (route === 'ContactUs' ?
                   < ContactUs onRouteChange={this.onRouteChange} />
+                
+                  : (route === 'Rides' ?
+                  < Rides onRouteChange={this.onRouteChange} />
+
+                  : (route === 'RideRequests' ?
+                  < RideRequests onRouteChange={this.onRouteChange} />
+
+                  : (route === 'AddRides' ?
+                  < AddRides onRouteChange={this.onRouteChange} />
 
                   : (route === 'SearchedRides' ?
                   < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}  />
@@ -100,7 +114,9 @@ class App extends Component {
               )
             )
           )
-
+          )
+          )
+          )
         }
 
 
