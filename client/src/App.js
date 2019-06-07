@@ -22,7 +22,10 @@ class App extends Component {
       searchedRides: [],
       source: '',
       dest: '',
-      fetchedRides:[]
+      date_of_travel: '',
+      hobbies: '',
+      fetchedRides:[],
+      img: ''
 
     };
 
@@ -34,33 +37,39 @@ class App extends Component {
     this.setState({ route: route });
   }
   
-
-   
-  onSubmitSearch = (source, dest) => {
-    console.log("in submit" +source +dest)
+  
     
-    fetch('http://localhost:9000/search', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            Source: source,
-            Destination: dest
-           
-        })
-    })
+    onSubmitSearch = (source, dest, date_of_travel, hobbies) => {
+      console.log("in submit" +source +dest+ date_of_travel + hobbies)
+      
+      fetch('http://localhost:9000/search', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              Source: source,
+              Destination: dest,
+              Date_Of_Travel : date_of_travel,
+              Hobbies : hobbies
+            
+          })
+      })
 
-          .then(response => response.json())
-          .then(ridedata => this.setState({ fetchedRides: ridedata.rides})); 
-          this.setState({ route: "SearchedRides" });
+            .then(response => response.json())
+          .then(ridedata => this.setState({ fetchedRides: ridedata.rides}))
+            
+            this.setState({ route: "SearchedRides" });
+            
           
-        
-        }
+          }
 
   render() {
-    const { route, fetchedRides } = this.state;
+    const { route, fetchedRides, img, rides, imgstring, imageStr } = this.state;
     
-    console.log("length dekh" +fetchedRides);
+    console.log("length dekh" +fetchedRides.fetchedRides);
     console.log("length dekh" +fetchedRides.length);
+    console.log("photo" + img);
+    
+    console.log("photo" + imgstring + "cccc" + imageStr);
     var fetchedRidesLength = fetchedRides.length;
     
     return (
