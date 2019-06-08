@@ -18,12 +18,28 @@
     margin-left: 80px
   }
 
+  .back{
+    margin-left:  1380px
+  }
+
+  
+  .pack{
+    list-style: none;
+   display: flex;
+   margin-left: 500px;
+  }
+
  .main-nav{
    list-style: none;
    display: flex;
    
  }
  
+ .navbar-nav{
+  list-style: none;
+  display: flex;
+  
+ }
 
  .navbar{
   height: 80px;
@@ -47,3 +63,17 @@ input:valid {
   background: #ddd;
   padding: 0.3em;
 }
+
+.container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+/* .table-image {
+  td, th {
+    vertical-align: middle;
+  }
+} */

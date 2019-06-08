@@ -11,8 +11,8 @@ var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
-//var createRideRouter = require("./routes/createRide");
-
+var createRideRouter = require("./routes/createRide");
+var requestRideRouter = require("./routes/requestRide");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 
@@ -33,6 +33,8 @@ app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
 app.use(searchRideRouter);
+app.use(createRideRouter);
+app.use(requestRideRouter);
 
  //catch 404 and forward to error handler
 app.use(function(req, res, next) {

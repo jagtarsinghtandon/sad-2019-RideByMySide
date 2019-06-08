@@ -1,13 +1,13 @@
 const express = require("express")
 const login = express.Router()
-const bcrypt= require("bcrypt")
+// const bcrypt= require("bcrypt")
 
 login.post('/login',(req,res)=>{
 
     var mysql = req.app.get('mysql');
 
-    const email = req.body.email;
-    const password = req.body.password;
+    const email = req.body.Email;
+    const password = req.body.Password;
     
    // bcrypt.compareSync('req.body.password', hash);
 

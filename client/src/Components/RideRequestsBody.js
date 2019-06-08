@@ -2,7 +2,7 @@ import React from 'react';
 import profile from './profile3.png';
 
 
-const SearchedRidesBody = ({source, destination, date_of_travel}) => {
+const RideRequestsBody = ({source, destination, date_of_travel}) => {
     return (    
                     <div  className="pa0 ">
                             <table className="f6 w-100 ph0 mw8 center bg-white" cellSpacing="100">
@@ -15,7 +15,12 @@ const SearchedRidesBody = ({source, destination, date_of_travel}) => {
                                          <td className="pa3">{source}</td>
                                          <td className="pa3">{destination}</td>
                                          <td className="pa3">{date_of_travel}</td>
-                                         
+                                         <td>{Action}
+                                         <div >
+                                        <input  class="btn bg-primary" value="Accept"/>
+                                        <input  class="btn bg-primary" value="Reject"/>
+                                        </div>
+                                         </td>
                                      </tr>
                                  </tbody>
                              </table>
@@ -27,4 +32,4 @@ const SearchedRidesBody = ({source, destination, date_of_travel}) => {
 }
 
 
-export default SearchedRidesBody;
+export default RideRequestsBody;

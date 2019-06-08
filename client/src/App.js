@@ -7,6 +7,10 @@ import Search from './Components/Search';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
 import RideList from './Components/RideList';
+import ProfileFetch from './Components/ProfileFetch';
+import Rides from './Components/Rides';
+import RideRequestsHeader from './Components/RideRequestsHeader';
+import AddRides from './Components/AddRides';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
@@ -22,7 +26,11 @@ class App extends Component {
       searchedRides: [],
       source: '',
       dest: '',
-      fetchedRides:[]
+      email: '',
+       password: '',
+       logins:[],
+      fetchedRides:[],
+      profiles: []
   
 
   }
@@ -36,7 +44,7 @@ class App extends Component {
 
 
   onSubmitSearch = (source, dest) => {
-    console.log("in submit" +source +dest)
+    console.log(source +dest)
     
     fetch('http://localhost:9000/search', {
         method: 'POST',
@@ -55,44 +63,134 @@ class App extends Component {
         
         }
 
+        onSubmit = (email, password) => {
+          console.log("in submit" +email +password)
+                fetch('http://localhost:9000/login', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({
+                    Email: email,
+                    Password: password
+                })
+              })
+              
+          
+          
+            .then((response) => {
+              response.json()
+              if(response.status === 500)
+              alert("invalid email or password")
+              else
+              {
+                this.setState({ logins: response.logins},console.log('success'))
+                  alert('Successfully logged in')
+
+                      fetch('http://localhost:9000/profile', {
+                                method: 'post',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                 Email: email,
+                                })
+                            })
+                                .then(response => response.json())
+                                .then((profiledata) => this.setState({ profiles: profiledata.profile } ,console.log("in submit")));
+                    
+                                 this.setState({ route: "Profile" });
+               }            
+              
+          })
+                
+            }
+
+     
         
 
   render() {
-    const { route, fetchedRides } = this.state;
-    
-    
-    console.log("length dekh" +fetchedRides);
-    console.log("length dekh" +fetchedRides.length);
+    const { route, fetchedRides, profiles } = this.state;
     var fetchedRidesLength = fetchedRides.length;
+    
+
+    console.log("profiles"+fetchedRides + profiles);
+    console.log("length"+fetchedRides.length);
     
     return (
 
       <div className="App">
-        <Navigation onRouteChange={this.onRouteChange} />
+        
         {route === 'Profile'
-          ? <div>
-            <Profile />
+          ? <Profile onRouteChange={this.onRouteChange}   />
 
 
-          </div>
           : (route === 'Login' ?
-            <Login onRouteChange={this.onRouteChange} />
+          <div>
+                      <Navigation onRouteChange={this.onRouteChange} />
+                      <Login onRouteChange={this.onRouteChange} onSubmit={this.onSubmit}/>
+                      
+                    </div>
 
             : (route === 'Register' ?
-              <Register onRouteChange={this.onRouteChange} />
+            <div>
+                      <Navigation onRouteChange={this.onRouteChange} />
+                      <Register onRouteChange={this.onRouteChange} />
+                    </div>
 
               : (route === 'AboutUs' ?
-                < AboutUs onRouteChange={this.onRouteChange} />
+              <div>
+                      <Navigation onRouteChange={this.onRouteChange} />
+                      < AboutUs onRouteChange={this.onRouteChange} />
+                    </div>
 
                 : (route === 'ContactUs' ?
-                  < ContactUs onRouteChange={this.onRouteChange} />
+                <div>
+                      <Navigation onRouteChange={this.onRouteChange} />
+                      < ContactUs onRouteChange={this.onRouteChange} />
+                    </div>
 
                   : (route === 'SearchedRides' ?
-                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}  />
+                  <div>
+                     <Profile onRouteChange={this.onRouteChange} />
+                      < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}  />                      
+                    </div>
 
+                  : (route === 'Search' ?
+                  <div>
+                      <Profile onRouteChange={this.onRouteChange} />
+                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}/>
+                    </div>
+
+
+                  : (route === 'MyProfile' ?
+                  <div>
+                    <Profile onRouteChange={this.onRouteChange} />
+                    <ProfileFetch profiles={profiles}/>  
+                    </div>
+
+                  : (route === 'Rides' ?
+                  <div>
+                  <Profile onRouteChange={this.onRouteChange} />
+
+                  < Rides onRouteChange={this.onRouteChange} />
+                  </div>
+
+                  : (route === 'RideRequestsHeader' ?
+                  <div>
+                  <Profile onRouteChange={this.onRouteChange} />
+
+                  < RideRequestsHeader onRouteChange={this.onRouteChange}  />
+                  </div>
+
+                 
+
+                  : (route === 'AddRides' ?
+                  <div>
+                  <Profile onRouteChange={this.onRouteChange} />
+
+                  < AddRides onRouteChange={this.onRouteChange} />
+                  </div>
+                  
                   : (route === 'home',
                     <div>
-                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}/>
+                      <Navigation onRouteChange={this.onRouteChange} />
                     </div>
 
 
@@ -102,7 +200,14 @@ class App extends Component {
               )
             )
           )
-
+          )
+          )
+          ) 
+              )
+            )
+          
+          
+          
         }
 
 
@@ -116,7 +221,7 @@ class App extends Component {
         </div>
 
         <footer className="pv4 ph3 ph5-ns tc">
-          <a className="link dim gray dib h2 w2 br-100 mr3 " href="https://www.facebook.com/" title="">
+          <a className="link dim gray dib h2 w2 br-100 mr3 mt6 pt7" href="https://www.facebook.com/" title="">
             <svg data-icon="facebook" viewBox="0 0 32 32" >
               <title>facebook icon</title>
               <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"></path>
@@ -135,10 +240,10 @@ class App extends Component {
             </svg>
           </a>
           <div className="mt4">
-            <p  className="f6 link dim gray dib mr3 mr4-ns">Help</p>
+            <p  className="f6 link dim gray dib mr3  mr4-ns">Help</p>
             <p  className="f6 link dim gray dib mr3 mr4-ns">Send feedback</p>
-            <p  className="f6 link dim gray dib mr3 mr4-ns">Privacy</p>
-            <p  className="f6 link dim gray dib">Terms</p>
+            <p  className="f6 link dim gray dib mr3  mr4-ns">Privacy</p>
+            <p  className="f6 link dim gray dib ">Terms</p>
           </div>
         </footer>
       </div>
