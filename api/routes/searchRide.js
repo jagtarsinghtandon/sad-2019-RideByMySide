@@ -4,7 +4,6 @@ var searchRide = express.Router();
 const ride = require("../models/Rides")
 const jwt = require("jsonwebtoken")
 
-//router.use(cors())
 
 searchRide.get('/search', verifyToken, (req, res) => {
 
