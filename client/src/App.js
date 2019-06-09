@@ -50,7 +50,7 @@ class App extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
       
-          Logged_In_Person_Id : "5",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
+          Logged_In_Person_Id : "9",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
           Ride_Id : ride_id
         })
   })
@@ -75,7 +75,7 @@ class App extends Component {
           Ride_Id : ride_id,
           Person_Id : person_id ,    
           Ride_Id : ride_id,
-          Requested_Person_Id : "5"
+          Requested_Person_Id : "9"
          
         
       })
@@ -150,7 +150,9 @@ class App extends Component {
                   < ContactUs onRouteChange={this.onRouteChange} />
 
                   : (route === 'SearchedRides' ?
-                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength} onRequestRide={this.onRequestRide}   />
+                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength} 
+                   
+                  onRouteChange = {this.onRouteChange} onRequestRide={this.onRequestRide}   />
 
                   : (route === 'home',
                     <div>

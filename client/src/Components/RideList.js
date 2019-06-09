@@ -4,7 +4,7 @@ import SearchedRidesBody from './SearchRidesBody';
 
 
 
-const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide }) => {
+const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide, onRouteChange }) => {
   // console.log(image);
     return (
       <div >
@@ -29,6 +29,8 @@ const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide }) => {
               // {console.log(image)}
            
               onRequestRide = {onRequestRide}
+              
+              onRouteChange = {onRouteChange}
                 />             
             );
           })
