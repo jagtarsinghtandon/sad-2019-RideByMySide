@@ -5,7 +5,7 @@ const cors = require("cors")
 router.use(cors())
 
 router.post('/search', (req, res) => {
-    
+    console.log("search rides")
     const source =  req.body.Source;
     const destination = req.body.Destination;
     
@@ -18,7 +18,7 @@ router.post('/search', (req, res) => {
 
        // var queryString = "SELECT SOURCE, DESTINATION,DATE_TIME_OF_RIDE FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
         var queryString =
-       " SELECT   person.FIRST_NAME, ride.SOURCE, ride.DESTINATION, ride.DATE_TIME_OF_RIDE,person.HOBBIES, person.IMAGE   FROM ridebymysidedb.ride JOIN ridebymysidedb.person ON ride.person_PERSON_ID = person.PERSON_ID WHERE SOURCE= ? AND DESTINATION= ? AND DATE_TIME_OF_RIDE= ? AND HOBBIES=?;"
+       " SELECT person.PERSON_ID, person.FIRST_NAME, ride.SOURCE, ride.DESTINATION, ride.DATE_TIME_OF_RIDE, ride.RIDE_ID ,person.HOBBIES, person.IMAGE  FROM ridebymysidedb.ride JOIN ridebymysidedb.person ON ride.person_PERSON_ID = person.PERSON_ID WHERE SOURCE= ? OR DESTINATION= ? OR DATE_TIME_OF_RIDE= ? OR HOBBIES=?;"
         
       
         var filter = [source, destination, date_of_travel, hobbies];

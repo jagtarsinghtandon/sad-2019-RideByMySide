@@ -4,24 +4,7 @@ import SearchedRidesBody from './SearchRidesBody';
 
 
 
-// componentWillMount(); {
-// //   var base64Flag = 'data:image/jpeg;base64,';
-
-// //   // var fetchedRidesLength2 = fetchedRides.length;
-// //   var imgstring=[]  
-  
-// //  var imageStr = this.arrayBufferToBase64(image)
-// //       imgstring.push(base64Flag + imageStr)
-
-    
-// //     this.setState({
-// //       img: imgstring
-      
-// //   })
-// console.log(image)
-// }
-
-const RideList = ({ fetchedRides, fetchedRidesLength }) => {
+const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide }) => {
   // console.log(image);
     return (
       <div >
@@ -39,9 +22,13 @@ const RideList = ({ fetchedRides, fetchedRidesLength }) => {
                 name={fetchedRides[i].FIRST_NAME}
                 image={fetchedRides[i].IMAGE.data}
                 hobbies={fetchedRides[i].HOBBIES}
+                person_id={fetchedRides[i].PERSON_ID}
+                ride_id={fetchedRides[i].RIDE_ID}
+                
                 
               // {console.log(image)}
            
+              onRequestRide = {onRequestRide}
                 />             
             );
           })
