@@ -17,6 +17,11 @@
   .pull{
     margin-left: 80px
   }
+  .pack{
+    list-style: none;
+   display: flex;
+   margin-left: 500px;
+  }
 
   .back{
     margin-left:  1380px
