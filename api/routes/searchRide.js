@@ -23,11 +23,7 @@ searchRide.get('/search', verifyToken, (req, res) => {
         .then(function (search) {
           //var row = search.get({ plain: true });
           res.json({ searchedride: search })
-          //console.log(search);
-          //   plain: true
-          // }))
 
-          //console.log(row.id);
         });
 
     }
