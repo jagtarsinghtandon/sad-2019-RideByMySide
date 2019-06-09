@@ -1,33 +1,47 @@
 var express = require("express");
-var router = express.Router();
-const cors = require("cors")
+var searchRide = express.Router();
+//const cors = require("cors")
+const ride = require("../models/Rides")
+const jwt = require("jsonwebtoken")
 
-router.use(cors())
+//router.use(cors())
 
-router.post('/search', (req, res) => {
+searchRide.get('/search',verifyToken, (req, res) => {
     
-    const source =  req.body.Source;
-    const destination = req.body.Destination;
+    
+    const im_source = req.body.source;
+    const im_destination = req.body.destination;
+
+    ride.findAll({ where: { SOURCE: im_source, DESTINATION: im_destination },raw:true })
+                .then(function (search) {
+                  //var row = search.get({ plain: true });
+                    res.json({ searchedride: search })
+                    //console.log(search);
+                     //   plain: true
+                   // }))
+                    
+                    //console.log(row.id);
+                });
 
 
-    var mysql = req.app.get('mysql');
 
-        var queryString = "SELECT SOURCE, DESTINATION,DATE_TIME_OF_RIDE FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
-        var filter = [source, destination];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
-          
-            
-        if (!err){
-            res.json({rides:rows})
-
-        }
-        else
-        console.log(' ride data is not showing \n ERROR :' + err);
-})
 });
 
+function verifyToken(req, res, next) {
 
+  const bearerHeader = req.headers['authorization'];
 
-module.exports = router
+  if (typeof bearerHeader != 'undefined') {
+
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
+      req.token = bearerToken;
+      next();
+  } else {
+
+      res.sendStatus(403);
+  }
+}
+
+module.exports = searchRide
 

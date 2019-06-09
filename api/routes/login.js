@@ -1,52 +1,33 @@
 const express = require("express")
 const login = express.Router()
-const bcrypt= require("bcrypt")
+const jwt = require("jsonwebtoken")
+const person = require("../models/Person")
 
 login.post('/login',(req,res)=>{
 
-    var mysql = req.app.get('mysql');
 
-    const email = req.body.email;
-    const password = req.body.password;
+    const im_email = req.body.email;
+    const im_password = req.body.password;
     
-   // bcrypt.compareSync('req.body.password', hash);
 
-//    const query = "insert query with generated crypt password";
-//    pool.query(query, (err, res) => {
-//        const dbPsw = res.rows[0].hash_psw; // db password
-//        bcrypt.compare(password, dbPsw, function(err, result) {
-//            if (err)
-//                console.log(err);
-//            else if (result)
-//                console.log("password match");
-//            else
-//                console.log("not match");
-//        });
-//    })
 
-   const CheckQuery = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
-    const filter1 = [email,password];
-    console.log(this.state);
-       mysql.query(CheckQuery, filter1, (err, rows, fields)=>{
-    if (rows.length ==0){
-        console.log("invalid email or password ");
-            res.status(500).json({logins:rows})
-           
-        }
-        
-    else{
-    var queryString = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
-            var filter = [email,password];
-            console.log(this.state);
-            mysql.query(queryString, filter, (err, rows, fields)=>{    
-            if (!err){
-                res.json({logins:rows}) 
-            }
-            else
-            console.log('  data is not showing \n ERROR :' + err);
-    })
-}
-       })
+    person.findOne({where:{email:im_email,password:im_password}})
+    .then(function(project) {
+        var row = project.get({plain:true})
+
+        const userdata = { id: row.id,
+        email: row.email,
+        password: row.password}
+
+        jwt.sign({user: userdata}, 'secretkey',(err,token)=>{
+            res.json({
+                logins:row,
+                token:token
+            });
+            console.log(token);
+        });
+    });
+ 
      
 
     });
