@@ -14,6 +14,8 @@ import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
+import SearchedRidesBody from './Components/SearchRidesBody';
+
 
 
 
@@ -25,8 +27,11 @@ class App extends Component {
       searchedRides: [],
       source: '',
       dest: '',
-      fetchedRides:[]
-
+      date_of_travel: '',
+      hobbies: '',
+      fetchedRides:[],
+      img: '',
+      imgstring: '', name:'', destination:'', person_id:'', ride_id:''
     };
 
   }
@@ -36,34 +41,93 @@ class App extends Component {
     
     this.setState({ route: route });
   }
-  
 
-   
-  onSubmitSearch = (source, dest) => {
-    console.log("in submit" +source +dest)
+     
+  onRequestRide = (imgstring,  name, source, destination, date_of_travel, hobbies, person_id, ride_id) => {
+    console.log("yeh beja request" +name, source, destination, date_of_travel, hobbies, person_id, ride_id)
     
-    fetch('http://localhost:9000/search', {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            Source: source,
-            Destination: dest
-           
-        })
-    })
 
-          .then(response => response.json())
-          .then(ridedata => this.setState({ fetchedRides: ridedata.rides})); 
-          this.setState({ route: "SearchedRides" });
-          
+
+    fetch('http://localhost:9000/checkrequestride', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+      
+          Logged_In_Person_Id : "9",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
+          Ride_Id : ride_id
+        })
+  })
+        
+  .then((response) => {
+    response.json()
+    if(response.status === 200)
+    alert("Ride already requested")
+    else
+    {
+        
+    fetch('http://localhost:9000/requestRide', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+          Imgstring: imgstring,
+          First_Name: name,
+          Source: source,
+          Destination: destination,
+          Date_Of_Travel : date_of_travel,
+          Hobbies : hobbies,
+          Ride_Id : ride_id,
+          Person_Id : person_id ,    
+          Ride_Id : ride_id,
+          Requested_Person_Id : "9"
+         
+        
+      })
+  })
+  
+  .then(response => response.json())
+  .then(rideRequestdata => this.setState({ rideRequested: rideRequestdata.rideRequested}))
+    
+  alert('Congratulations, your ride has been Requested')
+    }
+})
         
         }
+  
+    
+    onSubmitSearch = (source, dest, date_of_travel, hobbies) => {
+      console.log("in submit" +source +dest+ date_of_travel + hobbies)
+        
+      
+      fetch('http://localhost:9000/search', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              Source: source,
+              Destination: dest,
+              Date_Of_Travel : date_of_travel,
+              Hobbies : hobbies
+            
+          })
+      })
+
+            .then(response => response.json())
+          .then(ridedata => this.setState({ fetchedRides: ridedata.rides}))
+            
+            this.setState({ route: "SearchedRides" });
+            
+          
+          }
 
   render() {
-    const { route, fetchedRides } = this.state;
+    const { route, fetchedRides, img, rides, imgstring, imageStr, rideRequested } = this.state;
     
-    console.log("length dekh" +fetchedRides);
+    console.log("length dekh" +fetchedRides.fetchedRides);
     console.log("length dekh" +fetchedRides.length);
+    console.log("photo" + img);
+    
+    console.log("photo" + imgstring + "cccc" + imageStr);
+
+    console.log("yeh dal gaya ride request table mein"+rideRequested);
     var fetchedRidesLength = fetchedRides.length;
     
     return (
@@ -100,11 +164,14 @@ class App extends Component {
                   < AddRides onRouteChange={this.onRouteChange} />
 
                   : (route === 'SearchedRides' ?
-                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}  />
+                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength} 
+                   
+                  onRouteChange = {this.onRouteChange} onRequestRide={this.onRequestRide}   />
 
                   : (route === 'home',
                     <div>
-                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}/>
+                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}
+                     />
                     </div>
 
 

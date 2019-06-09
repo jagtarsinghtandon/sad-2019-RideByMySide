@@ -6,24 +6,32 @@ const jwt = require("jsonwebtoken")
 
 //router.use(cors())
 
-searchRide.get('/search',verifyToken, (req, res) => {
-    
-    
-    const im_source = req.body.source;
-    const im_destination = req.body.destination;
+searchRide.get('/search', verifyToken, (req, res) => {
 
-    ride.findAll({ where: { SOURCE: im_source, DESTINATION: im_destination },raw:true })
-                .then(function (search) {
-                  //var row = search.get({ plain: true });
-                    res.json({ searchedride: search })
-                    //console.log(search);
-                     //   plain: true
-                   // }))
-                    
-                    //console.log(row.id);
-                });
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
 
+      const im_source = req.body.Source;
+      const im_destination = req.body.Destination;
+        
+        const date_of_travel = req.body.Date_Of_Travel;
+        
+        const hobbies = req.body.Hobbies;
+      ride.findAll({ where: { SOURCE: im_source, DESTINATION: im_destination }, raw: true })
+        .then(function (search) {
+          //var row = search.get({ plain: true });
+          res.json({ searchedride: search })
+          //console.log(search);
+          //   plain: true
+          // }))
 
+          //console.log(row.id);
+        });
+
+    }
+  });
 
 });
 
@@ -33,13 +41,13 @@ function verifyToken(req, res, next) {
 
   if (typeof bearerHeader != 'undefined') {
 
-      const bearer = bearerHeader.split(' ');
-      const bearerToken = bearer[1];
-      req.token = bearerToken;
-      next();
+    const bearer = bearerHeader.split(' ');
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
   } else {
 
-      res.sendStatus(403);
+    res.sendStatus(403);
   }
 }
 

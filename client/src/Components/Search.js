@@ -1,12 +1,13 @@
     import React, { Component } from 'react';
 
-
 class Search extends Component {
     constructor(props) {
         super(props)
         this.state = {
             source: '',
             dest: '',
+            date_of_travel : '',
+            hobbies:'',
             fetchedRides:[]
 
         }
@@ -24,12 +25,20 @@ class Search extends Component {
     onDestinationChange = (event) => {
         this.setState({ dest: event.target.value })
     }
+
+    
+    onDateChange = (event) => {
+        this.setState({ date_of_travel: event.target.value })
+    }
+    onHobbiesChange = (event) => {
+        this.setState({ hobbies: event.target.value })
+    }
   
 
 
 
     render() {
-        const {fetchedRides, source, dest} = this.state;
+        const {fetchedRides, source, dest, date_of_travel, hobbies} = this.state;
         
         console.log(fetchedRides +"@@@@@@@" +source +dest );
         
@@ -48,7 +57,7 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Search any City"
-                            name="Source" id="Source" required value={this.state.email}
+                            name="Source" id="Source" 
                             onChange={this.onSourceChange}
                         />
                     </div>
@@ -58,31 +67,36 @@ class Search extends Component {
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Search any City"
-                            name="Destination" id="Destination" required value={this.state.email}
+                            name="Destination" id="Destination" 
                             onChange={this.onDestinationChange}
                         />
                     </div>
 
                     <div className="mt3">
-                        <label className="db fw6 lh-copy f6" htmlFor="name">Interests</label>
+                        <label className="db fw6 lh-copy f6" htmlFor="name">Interests/Hobbies</label>
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
                             type="text" placeholder="Football, Movies, Books, etc."
                             name="Destination" id="Destination"
+                            onChange={this.onHobbiesChange}
+                            
                         />
                     </div>
                     <div className="mt3">
-                        <label className="db fw6 lh-copy f6" htmlFor="name">Date</label>
+                        <label className="db fw6 lh-copy f6" htmlFor="name">Date & Time</label>
                         <input
                             className="pa2 input-reset ba bg-transparent hover-bg-black hover-black w-100"
-                            type="date"
+                            type="datetime-local"
+
+                            
                             name="Date" id="Date"
+                            onChange={this.onDateChange}
                         />
                     </div>
                     <div className="">
                         <input 
                             
-                            onClick={() => onSubmitSearch(source,  dest)}
+                            onClick={() => onSubmitSearch(source,  dest, date_of_travel, hobbies)}
 
                             className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                             type="submit"
