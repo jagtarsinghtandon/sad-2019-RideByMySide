@@ -4,7 +4,7 @@ const person = require("../models/Person")
 const jwt = require("jsonwebtoken")
 
 
-profile.get('/profile', verifyToken, (req, res) => {
+profile.post('/profile', verifyToken, (req, res) => {
 
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if (err) {

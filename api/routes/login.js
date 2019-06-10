@@ -6,8 +6,8 @@ const person = require("../models/Person")
 login.post('/login',(req,res)=>{
 
 
-    const im_email = req.body.email;
-    const im_password = req.body.password;
+    const im_email = req.body.Email;
+    const im_password = req.body.Password;
     
 
 
@@ -21,8 +21,8 @@ login.post('/login',(req,res)=>{
 
         jwt.sign({user: userdata}, 'secretkey',(err,token)=>{
             res.json({
-                logins:row,
-                token:token
+                token:token,
+                status:200
             });
             console.log(token);
         });

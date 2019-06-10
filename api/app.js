@@ -11,7 +11,7 @@ var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
 var createRideRouter = require("./routes/createRide");
-
+var acceptRideRouter = require("./routes/acceptRide");
 var checkRequestRideRouter = require("./routes/checkRequestRide");
 
 var requestRideRouter = require("./routes/requestRide");
@@ -38,7 +38,7 @@ app.use(registerRouter);
 app.use(profileRouter);
 app.use(searchRideRouter);
 app.use(createRideRouter);
-
+app.use(acceptRideRouter);
 app.use(requestRideRouter);
 
 app.use(checkRequestRideRouter);
