@@ -17,12 +17,12 @@ const SearchedRidesBody = ({ source, destination, date_of_travel, image, name, h
 
 
     imgstring.push(base64Flag + imageStr)
-
+    console.log(imgstring)
 
 
     return (
         <div className="pa0 ">
-            <table className="f6 w-100 ph0 mw8 center bg-white zoom" cellspacing="100">
+            <table className="f6 w-100 ph0 mw8 center bg-white zoom" cellSpacing="100">
                 <tbody className="lh-copy">
                     <tr className="stripe-dark">
     

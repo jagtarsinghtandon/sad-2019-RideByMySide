@@ -4,8 +4,9 @@ import React from 'react';
 
 
 
-const MyProfile = ({email, first_name, last_name}) => {
-
+const MyProfile = ({email, first_name, last_name, person_id}) => {
+global.id = person_id
+global.first_name = first_name
         return(
             
              

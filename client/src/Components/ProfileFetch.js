@@ -14,8 +14,11 @@ const ProfileFetch = ({ profiles }) => {
                 email={profiles[i].EMAIL}
                 first_name={profiles[i].FIRST_NAME}
                 last_name={profiles[i].LAST_NAME}
+                person_id={profiles[i].PERSON_ID}
+             
                 />             
             );
+         
           })
         }
       </div>

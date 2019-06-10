@@ -1,10 +1,11 @@
-const express = require("express")
-const requestRide = express.Router()
+var express = require("express");
+var router = express.Router();
 const cors = require("cors")
-requestRide.use(cors())
 
-requestRide.get('/requestRide',(req,res)=>{
+router.use(cors())
 
+router.post('/requestride', (req, res) => {
+    
     const person_id =  req.body.Person_Id;
     const imgstring =  req.body.Imgstring;
     const first_name =  req.body.First_Name;
@@ -20,6 +21,7 @@ requestRide.get('/requestRide',(req,res)=>{
 
     var mysql = req.app.get('mysql');
 
+     
     var queryString = "INSERT INTO ridebymysidedb.rideRequests (FIRST_NAME, PERSON_ID,SOURCE,DESTINATION,DATE_TIME_OF_RIDE,HOBBIES, RIDE_STATUS, IMAGE, rideRequests.REQUESTED_PERSON_ID, rideRequests.ride_RIDE_ID) VALUES (?,?,?,?,?,?,?,?,?,?);"
         var filter = [first_name, person_id,source, destination,date_of_travel, hobbies, ride_status, imgstring, requested_person_id, ride_id];
         console.log(this.state);
@@ -34,13 +36,8 @@ requestRide.get('/requestRide',(req,res)=>{
             else
             console.log('Ride has been created \n ERROR :' + err);
 })
-
-
-
-
 });
 
-module.exports = requestRide
 
 
-
+module.exports = router

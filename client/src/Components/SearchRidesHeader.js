@@ -13,7 +13,7 @@ const SearchedRidesHeader = ({length}) => {
                         )
                         }
                         
-                            <table className="f6 w-100 ph4 mw8 center bg-white" cellspacing="2">
+                            <table className="f6 w-100 ph4 mw8 center bg-white" cellSpacing="2">
                                 <thead>
                                     <tr className="stripe-dark">
                                         

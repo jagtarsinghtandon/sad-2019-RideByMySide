@@ -9,7 +9,7 @@ profile.post('/profile',(req,res)=>{
     const email = req.body.Email;
     
 
-const queryString = "SELECT EMAIL,FIRST_NAME,LAST_NAME FROM ridebymysidedb.person WHERE EMAIL= ?"
+const queryString = "SELECT EMAIL,FIRST_NAME,LAST_NAME,PERSON_ID FROM ridebymysidedb.person WHERE EMAIL= ?"
             const filter = [email];
             console.log(this.state);
             mysql.query(queryString, filter, (err, rows, fields)=>{

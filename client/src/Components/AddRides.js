@@ -20,7 +20,7 @@ class AddRides extends Component {
     }
 
     onSubmit () {
-      fetch('http://localhost:9000/createride', {
+      fetch('http://localhost:9000/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

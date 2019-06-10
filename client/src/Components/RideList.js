@@ -8,7 +8,7 @@ const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide, onRouteChan
   // console.log(image);
     return (
       <div >
-                      <SearchedRidesHeader
+          <SearchedRidesHeader
                 length = {fetchedRidesLength}
                                    
                 />
