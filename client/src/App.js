@@ -82,6 +82,7 @@ class App extends Component {
                         'Authorization':"Bearer "},
             body: JSON.stringify({
               Email: email,
+              Password:password
             })
           })
             .then(response => response.json())

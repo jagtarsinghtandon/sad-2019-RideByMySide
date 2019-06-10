@@ -15,7 +15,7 @@ module.exports = conn.define("rideRequest",{
     DESTINATION: Sequelize.STRING(45),
     DATE_TIME_OF_RIDE: Sequelize.STRING(45),
     HOBBIES: Sequelize.STRING(45),
-    RIDE_RIDE_ID: Sequelize.INTEGER(11),
+    ride_RIDE_ID: Sequelize.INTEGER(11),
     RIDE_STATUS: Sequelize.STRING(45),
     IMAGE: Sequelize.BLOB,
     FIRST_NAME: Sequelize.STRING(45),
