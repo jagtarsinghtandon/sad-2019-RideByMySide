@@ -139,7 +139,7 @@ class Register extends Component {
         </article>
 
     );
-    }
+     }
 }
 
 export default Register;

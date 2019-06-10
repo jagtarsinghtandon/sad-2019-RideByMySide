@@ -9,80 +9,59 @@ class Login extends Component {
           logins: []
 
       }
-      this.onChange = this.onChange.bind(this)
-      this.onSubmit = this.onSubmit.bind(this)
+      // this.onChange = this.onChange.bind(this)
+      // this.onSubmit = this.onSubmit.bind(this)
      
   }
   
+  onEmailChange = (event) => {
+    this.setState({ email: event.target.value })
+}
+
+OnPasswordChange = (event) => {
+    this.setState({ password: event.target.value })
+}
 
 
-  onChange (e) {
-      this.setState({ [e.target.name]: e.target.value })
-  }
+  // onChange (e) {
+  //     this.setState({ [e.target.name]: e.target.value })
+  // }
 
-  onSubmit (event) {
-      event.preventDefault();
-      fetch('http://localhost:9000/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password
-      })
-    })
+//   onSubmit (event) {
+//       event.preventDefault();
+//       fetch('http://localhost:9000/login', {
+//         method: 'POST',
+//         headers: {'Content-Type': 'application/json'},
+//         body: JSON.stringify({
+//           email: this.state.email,
+//           password: this.state.password
+//       })
+//     })
     
-<<<<<<< HEAD
-      .then(response => response.json())
-    .then(logindata => this.setState({ login: logindata.login},console.log('success')))
-    this.props.onRouteChange('Profile'); 
-     
-    
-    
-     console.log("in submit")
-     fetch('http://localhost:9000/profile', {
-         method: 'post',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-             Source: this.state.source,
-             Destination: this.state.dest
-         })
-     })
-         .then(response => response.json())
-         .then((profiledata) => {
-             this.setState({ profiles: profiledata.profiles })
-             // this.setState({route:'SearchedRides'})
-             //route= 'SearchedRides'
-             this.props.onRouteChange('SearchedRides')
-             //  this.props.getSearchedRides(rides)
-
-         })
-         
-         
-        
-=======
 
 
-  .then((response) => {
-    response.json()
-    if(response.status === 500)
-    alert("invalid email or password")
-    else
-    {
-        this.setState({ logins: response.logins},console.log('success'))
-        alert('Successfully logged in')
-            this.props.onRouteChange('Profile')
-    }
-})
+//   .then((response) => {
+//     response.json()
+//     if(response.status === 500)
+//     alert("invalid email or password")
+//     else
+//     {
+//         this.setState({ logins: response.logins},console.log('success'))
+//         alert('Successfully logged in')
+//             this.props.onRouteChange('Profile')
+//     }
+// })
       
->>>>>>> 07a044e95b905d8a08d417ea21da43a487f4cc29
-  }
+//   }
 
 
 
 render() {
 
+  const {email, password} = this.state;
   const { onRouteChange } = this.props;
-
+  const { onSubmit } = this.props;
+      
   const logins = this.state;
   console.log(logins); 
 
@@ -103,7 +82,7 @@ render() {
                   required 
                   pattern="[^]+@[^]+[.][a-z]{2,63}$"
                   value={this.state.email}
-                  onChange={this.onChange}
+                  onChange={this.onEmailChange}
                 />  
               </div>
 
@@ -118,7 +97,7 @@ render() {
                   required 
                   minLength="5"  maxLength="8" 
                   value={this.state.password}
-                  onChange={this.onChange}
+                   onChange={this.OnPasswordChange}
                 />
               </div>
 
@@ -128,7 +107,8 @@ render() {
 
             <div className="">
               <input
-                onClick={this.onSubmit}
+                // onClick={this.onSubmit}
+                onClick={() => onSubmit(email, password)}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
                 value="Sign in"

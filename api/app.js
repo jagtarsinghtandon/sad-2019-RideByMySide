@@ -10,7 +10,8 @@ var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
-
+var searchRideRouter = require("./routes/searchRide");
+var updateprofileRouter = require("./routes/updateprofile");
 
 
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
+app.use(searchRideRouter);
+app.use(updateprofileRouter);
 
 
 // catch 404 and forward to error handler
