@@ -13,7 +13,7 @@ profile.post('/profile', verifyToken, (req, res) => {
             const im_email = req.body.email;
             const im_password = req.body.password;
 
-            person.findOne({ where: { email: im_email, password: im_password } })
+            person.findOne({ where: { EMAIL: im_email, PASSWORD: im_password } })
                 .then(function (data) {
                     res.json({ searchprofile: data.get({ plain: true }) })
                     console.log(data.get({

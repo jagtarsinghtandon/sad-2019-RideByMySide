@@ -22,7 +22,7 @@ const err = (err)=>{
 
 
 
-        person.create({firstname:im_firstname,lastname:im_lastname,email:im_email,password:im_password})
+        person.create({FIRST_NAME:im_firstname,LAST_NAME:im_lastname,EMAIL:im_email,PASSWORD:im_password})
         .then(function(data)  {
             res.json({registers:data.get({plain:true})})
             console.log(data.get({

@@ -2,15 +2,15 @@ const Sequelize = require("sequelize");
 const conn = require("../bin/connection");
 
 
-module.exports = conn.define("Person",{
+module.exports = conn.define("Person", {
 
-    PERSON_ID:{
+    PERSON_ID: {
         type: Sequelize.INTEGER(11),
-        allowNull:false,
-        autoIncrement:true,
-        primaryKey:true,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
     },
-    
+
     FIRST_NAME: Sequelize.STRING(45),
     LAST_NAME: Sequelize.STRING(45),
     EMAIL: Sequelize.STRING(45),
@@ -24,4 +24,8 @@ module.exports = conn.define("Person",{
     HOBBIES: Sequelize.STRING(45),
     IMAGE: Sequelize.BLOB,
 
-})
+},
+    {
+        freezeTableName: true
+    }
+)

@@ -79,7 +79,7 @@ class App extends Component {
           fetch('http://localhost:9000/profile', {
             method: 'post',
             headers: { 'Content-Type': 'application/json',
-                        'Authorization':"Bearer "},
+                        'Authorization':"Bearer "+token},
             body: JSON.stringify({
               Email: email,
               Password:password

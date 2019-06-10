@@ -11,7 +11,7 @@ login.post('/login',(req,res)=>{
     
 
 
-    person.findOne({where:{email:im_email,password:im_password}})
+    person.findOne({where:{EMAIL:im_email,PASSWORD:im_password}})
     .then(function(project) {
         var row = project.get({plain:true})
 

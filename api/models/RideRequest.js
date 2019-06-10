@@ -2,13 +2,13 @@ const Sequelize = require("sequelize");
 const conn = require("../bin/connection");
 
 
-module.exports = conn.define("rideRequest",{
+module.exports = conn.define("rideRequest", {
 
-    RIDE_REQUEST_ID:{
+    RIDE_REQUEST_ID: {
         type: Sequelize.INTEGER(11),
-        allowNull:false,
-        autoIncrement:true,
-        primaryKey:true,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
     },
     PERSON_ID: Sequelize.INTEGER(11),
     SOURCE: Sequelize.STRING(45),
@@ -19,8 +19,8 @@ module.exports = conn.define("rideRequest",{
     RIDE_STATUS: Sequelize.STRING(45),
     IMAGE: Sequelize.BLOB,
     FIRST_NAME: Sequelize.STRING(45),
-    REQUESTED_PERSON_ID: Sequelize.STRING(45),    
+    REQUESTED_PERSON_ID: Sequelize.STRING(45),
 },
-{
-    freezeTableName: true
-})
+    {
+        freezeTableName: true
+    })
