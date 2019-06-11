@@ -25,8 +25,13 @@ router.post('/checkrequestride',verifyToken, (req, res) => {
       })
         .then(function (request) {
           //var row = search.get({ plain: true });
-          res.json({ requestedride: request })
-
+          if(request.length > 0) 
+          {
+            res.status(200).json({ requestedride: request })
+          }
+          
+          else
+          res.status(500).json({ requestedride: request })
         });
       //     console.log("gfggffg")
       //     var mysql = req.app.get('mysql');

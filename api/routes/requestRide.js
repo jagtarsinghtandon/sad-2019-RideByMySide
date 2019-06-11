@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var requestRide = require("../models/RideRequest")
+var person = require("../models/Person");
+var jwt = require("jsonwebtoken")
 // const cors = require("cors")
 
 // router.use(cors())
@@ -12,8 +14,16 @@ router.post('/requestRide', verifyToken, (req, res) => {
             res.sendStatus(403);
         } else {
 
+            // var img = []
+
+            // var binary = '';
+            
+
+
+            // imgstring.push(base64Flag + imageStr)
+
             const person_id = req.body.Person_Id;
-            const imgstring = req.body.Imgstring;
+            var imgstring = req.body.Imgstring;
             const first_name = req.body.First_Name;
             const source = req.body.Source;
             const destination = req.body.Destination;
@@ -23,6 +33,18 @@ router.post('/requestRide', verifyToken, (req, res) => {
             const ride_status = "Requested";
             const requested_person_id = req.body.Requested_Person_Id;
 
+            person.findOne({
+                attributes: ['IMAGE'], where: { PERSON_ID: requested_person_id }
+            })
+                .then(function (image) {
+                    imgstring = image.IMAGE;
+            //         img = image.get({ plain: true });
+            //         var bytes = [].slice.call(new Uint8Array(img));
+            // bytes.forEach((b) => binary += String.fromCharCode(b));
+            // var imageStr = window.btoa(binary);
+            // var base64Flag = 'data:image/jpeg;base64,';
+                    console.log(imgstring);
+                })
 
             requestRide.create({
                 PERSON_ID: person_id, SOURCE: source, DESTINATION: destination, DATE_TIME_OF_RIDE: date_of_travel, HOBBIES: hobbies,
@@ -62,17 +84,17 @@ router.post('/requestRide', verifyToken, (req, res) => {
     // })
 });
 
-function verifyToken(req,res,next) {
+function verifyToken(req, res, next) {
 
     const bearerHeader = req.headers['authorization'];
 
-    if(typeof bearerHeader != 'undefined') {
+    if (typeof bearerHeader != 'undefined') {
 
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
         req.token = bearerToken;
         next();
-        }else{
+    } else {
 
         res.sendStatus(403);
     }
