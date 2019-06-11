@@ -1,52 +1,42 @@
 const express = require("express")
 const login = express.Router()
+<<<<<<< HEAD
 // const bcrypt= require("bcrypt")
+=======
+const jwt = require("jsonwebtoken")
+const person = require("../models/Person")
+>>>>>>> df97b79d2ce560c7e6155cd6b1c5423d7e18a547
 
 login.post('/login',(req,res)=>{
 
-    var mysql = req.app.get('mysql');
 
+<<<<<<< HEAD
     const email = req.body.Email;
     const password = req.body.Password;
+=======
+    const im_email = req.body.Email;
+    const im_password = req.body.Password;
+>>>>>>> df97b79d2ce560c7e6155cd6b1c5423d7e18a547
     
-   // bcrypt.compareSync('req.body.password', hash);
 
-//    const query = "insert query with generated crypt password";
-//    pool.query(query, (err, res) => {
-//        const dbPsw = res.rows[0].hash_psw; // db password
-//        bcrypt.compare(password, dbPsw, function(err, result) {
-//            if (err)
-//                console.log(err);
-//            else if (result)
-//                console.log("password match");
-//            else
-//                console.log("not match");
-//        });
-//    })
 
-   const CheckQuery = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
-    const filter1 = [email,password];
-    console.log(this.state);
-       mysql.query(CheckQuery, filter1, (err, rows, fields)=>{
-    if (rows.length ==0){
-        console.log("invalid email or password ");
-            res.status(500).json({logins:rows})
-           
-        }
-        
-    else{
-    var queryString = "SELECT EMAIL,PASSWORD FROM person WHERE EMAIL= ? AND PASSWORD= ?;"
-            var filter = [email,password];
-            console.log(this.state);
-            mysql.query(queryString, filter, (err, rows, fields)=>{    
-            if (!err){
-                res.json({logins:rows}) 
-            }
-            else
-            console.log('  data is not showing \n ERROR :' + err);
-    })
-}
-       })
+    person.findOne({where:{EMAIL:im_email,PASSWORD:im_password}})
+    .then(function(project) {
+        var row = project.get({plain:true})
+
+        const userdata = { id: row.id,
+        email: row.email,
+        password: row.password}
+
+        jwt.sign({user: userdata}, 'secretkey',(err,token)=>{
+            res.json({
+                token:token,
+                status:200
+            });
+            console.log(token);
+        });
+    });
+ 
      
 
     });

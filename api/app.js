@@ -6,12 +6,18 @@ var logger = require('morgan');
 var cors = require("cors");
 var app = express();
 var bodyparser = require("body-parser");
-var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
 var updateprofileRouter = require("./routes/updateprofile");
+var createRideRouter = require("./routes/createRide");
+var acceptRideRouter = require("./routes/acceptRide");
+var checkRequestRideRouter = require("./routes/checkRequestRide");
+var fetchRequestRidesRouter = require("./routes/fetchRequestRides");
+var requestRideRouter = require("./routes/requestRide");
+var displayRideRequestsRouter = require("./routes/displayRideRequests");
+//var createRideRouter = require("./routes/createRide");
 
 
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -38,8 +44,16 @@ app.use(updateprofileRouter);
 
 // catch 404 and forward to error handler
 /*app.use(function(req, res, next) {
+app.use(createRideRouter);
+app.use(acceptRideRouter);
+app.use(requestRideRouter);
+app.use(fetchRequestRidesRouter);
+app.use(checkRequestRideRouter);
+app.use(displayRideRequestsRouter);
+ //catch 404 and forward to error handler
+app.use(function(req, res, next) {
   next(createError(404));
-});*/
+});
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -50,27 +64,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-///Create Connection to MySql
-
-const db = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'password',
-  database : 'ridebymysidedb',
-  insecureAuth : true
-});
-
-// Connect
-db.connect((err) => {
-  if(err){
-      throw err;
-  }
-  console.log('MySql Connected...');
-  app.set('mysql',db)
-});
+});*/
 
 
 
-module.exports = app;
+
+module.exports = app

@@ -7,7 +7,9 @@ import Search from './Components/Search';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
 import RideList from './Components/RideList';
-import ProfileFetch from './Components/ProfileFetch';
+import Rides from './Components/Rides';
+import RideRequests from './Components/RideRequests';
+import AddRides from './Components/AddRides';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
@@ -16,6 +18,11 @@ import MyProfile from './Components/MyProfile';
 import UpdateProfile from './Components/UpdateProfile';
 import UpdateProfileFetch from './Components/UpdateProfileFetch';
 //import event from "event-module";
+
+import ProfileFetch from './Components/ProfileFetch';
+import SearchedRidesBody from './Components/SearchRidesBody';
+
+
 
 
 class App extends Component {
@@ -40,9 +47,25 @@ class App extends Component {
       rofile_in_first_name:'',
       
   
+      date_of_travel: '',
+      hobbies: '',
+      fetchedRides: [],
+      img: '',
+      imgstring: '', name: '', destination: '', person_id: '', ride_id: '',
+      email: '',
+      password: '',
+      logins: [],
+      profiles: [],
+      // token: [],
+      logged_in_person_id: '',
+      token: '',
+      logged_in_first_name: ''
+    };
 
   }
-  }
+
+  
+  
 
   onRouteChange = (route) => {
     
@@ -145,7 +168,8 @@ onSubmitUpdate  = (first_name, last_name, email, dob, mobileno, hobbies, image) 
      
         
 
-  render() {
+  render() 
+  {
     const { route, fetchedRides, profiles, profile_in_first_name} = this.state;
     var fetchedRidesLength = fetchedRides.length;
     
@@ -272,7 +296,7 @@ console.log("this is prof"+profiles)
       </div>
     );
   }
-}
 
+}
 
 export default App;

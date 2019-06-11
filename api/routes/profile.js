@@ -1,29 +1,46 @@
 const express = require("express")
 const profile = express.Router()
+const person = require("../models/Person")
+const jwt = require("jsonwebtoken")
 
 
-profile.post('/profile',(req,res)=>{
+profile.post('/profile', verifyToken, (req, res) => {
 
-    var mysql = req.app.get('mysql');
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if (err) {
+            res.sendStatus(403);
+        } else {
+            const im_email = req.body.email;
+            const im_password = req.body.password;
 
-    const email = req.body.Email;
-    
-
-const queryString = "SELECT EMAIL,FIRST_NAME,LAST_NAME,DOB,CONTACT_NO,HOBBIES,IMAGE FROM ridebymysidedb.person WHERE EMAIL= ?"
-            const filter = [email];
-            console.log(this.state);
-            mysql.query(queryString, filter, (err, rows, fields)=>{
-               
-                
-            if (!err){
-                res.json({profile:rows})
-            }
-            else
-            console.log('  data is not showing \n ERROR :' + err);
-    })
+            person.findOne({ where: { EMAIL: im_email, PASSWORD: im_password } })
+                .then(function (data) {
+                    res.json({ searchprofile: data.get({ plain: true }) })
+                    console.log(data.get({
+                        plain: true
+                    }))
+                    var row = data.get({ plain: true });
+                    console.log(row.id);
+                });
+        }
     });
+});
 
+function verifyToken(req, res, next) {
 
+    const bearerHeader = req.headers['authorization'];
+
+    if (typeof bearerHeader != 'undefined') {
+
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        next();
+    } else {
+
+        res.sendStatus(403);
+    }
+}
 
 
 module.exports = profile
