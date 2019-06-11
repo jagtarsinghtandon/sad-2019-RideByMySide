@@ -1,6 +1,10 @@
+
 import React,{ Component } from 'react';
-//import event from 'react';
-//const UpdateProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image, onSubmitUpdate,onFnameChange}) => {
+// import event from 'react';
+//import PropTypes from 'prop-types'
+//const myHandler = (e,props) => props.dispatch(something());
+
+// const UpdateProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image, onRouteChange, onSubmitUpdate, handleChange}) => {
 
 //this.state={onFnameChange};  
 class UpdateProfile extends Component {
@@ -8,25 +12,28 @@ class UpdateProfile extends Component {
     {
         super(props)
         this.state = {
-            first_name =
-            last_name,
-            email,
-            dob,
-            mobileno, 
-            hobbies, 
-            imgstring 
+            first_name:this.first_name,
+            last_name:this.last_name,
+            email:this.email,
+            dob:this.dob,
+            mobileno:this.mobileno,
+            hobbies:this.hobbies,
+            imgstring:this.imgstring,
+            // profile_in_first_name:this.profile_in_first_name
         }
     }
-// handleChange:onChange(event)
+// var e = 1;
+// this.onFnameChange = this.onChange.bind(this);
+// // const {onFnameChange} = this.props;
+// {onFnameChange = (e) => 
 // {
-//     this.setState({first_name: event.target.value});
+//     this.setState({first_name: e.target.value});
 // }
 // const {onFnameChange} = this.props;
     
 onFnameChange = (event) => {
     this.setState({ first_name: event.target.value })
 }        
-
 
 //         }
 //     }
@@ -37,13 +44,13 @@ onFnameChange = (event) => {
 
   render()
   {
-     //   const{ first_name, last_name, email, dob, mobileno, hobbies, image, onSubmitUpdate} = this.props;
-        //onst{ profiles} = this.props;
-        //const UpdateProfileFetch = this.state;
+       const{ profiles} = this.props;
+    //    const{ profiles} = this.props;
+    //     const UpdateProfileFetch = this.state;
         
-        //const profile_in_first_name =this.state ;
-         const {first_name, last_name, email, dob, mobileno, hobbies, image} = this.state;
-        // {
+        // const profile_in_first_name =this.state ;
+         const {profile_in_first_name,first_name, last_name, email, dob, mobileno, hobbies, image} = this.state;
+        {
          
         
         
@@ -51,10 +58,10 @@ onFnameChange = (event) => {
             const { onSubmitUpdate } = this.props;
 
 
-        console.log("this is update prof"+first_name, last_name, email, dob, mobileno, hobbies, image)
+        console.log("this is update prof"+profile_in_first_name,first_name, last_name, email, dob, mobileno, hobbies, image)
 
-
-          
+       
+         
         return (
 
             // cont{first_name} = this.state;
@@ -79,8 +86,9 @@ onFnameChange = (event) => {
                                         //placeholder={this.first_name}
                                         // first_name={profile.FIRST_NAME}
 
-                                        value={this.props.first_name}
+                                        value={first_name}
                                         onChange={this.onFnameChange}
+                                        // onChange= {(event) => handleChange(event.target.value)}
                                     />
 
                                 </div>
@@ -117,7 +125,7 @@ onFnameChange = (event) => {
                                         // email={profile.EMAIL}
 
                                         value={email}
-                                        onChange={this.onEmailChange}
+                                       // onChange={this.onEmailChange}
                                     />
 
                                 </div>
@@ -206,11 +214,12 @@ onFnameChange = (event) => {
         // }
         
   //}
-        }
-    }
+       // }
+ } 
 
-    
-     
+
+} 
+} 
 
            
     

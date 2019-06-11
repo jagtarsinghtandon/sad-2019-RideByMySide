@@ -212,9 +212,9 @@ console.log("this is prof"+profiles)
                     
                   : (route === 'UpdateProfile',
                     <div>
-                    <Profile onRouteChange={this.onRouteChange}></Profile>
-                    <UpdateProfile profile_in_first_name={profile_in_first_name} onRouteChange={this.onRouteChange} onSubmitUpdate={this.onSubmitUpdate} /> 
-                      {/* <MyProfile onRouteChange={this.onRouteChange}/> */}
+                    {/* <Profile onRouteChange={this.onRouteChange}></Profile> */}
+                    {/* <UpdateProfile />  */}
+                       {/* <MyProfile onRouteChange={this.onRouteChange}/>  */}
                       {/* <UpdateProfile onRouteChange={this.onRouteChange}  /> */}
                       {/* //<ProfileFetch  profiles={profiles} onRouteChange={this.onRouteChange}/>                         */}
                        <UpdateProfileFetch   profiles={profiles} onRouteChange={this.onRouteChange}  /> 
