@@ -2,7 +2,7 @@ import React from 'react';
 import './stylesheet.css';
 
 
-const MyRidesBody = ({source, destination, date_of_travel, image, first_name, hobbies }) => {
+const AcceptedRejectedRidesBody = ({source, destination, date_of_travel, image, first_name, hobbies,ride_status }) => {
 
     var imgstring = []
 
@@ -32,8 +32,8 @@ const MyRidesBody = ({source, destination, date_of_travel, image, first_name, ho
                         <td className="pa3">{destination}</td>
                         <td className="pa3">{date_of_travel}</td>
                         <td className="pa3">{hobbies}</td>
-
-                        <td className="pa3">Ride Request Accepted</td>
+                        <td className="pa3">{ride_status}</td>
+                       
 
                     </tr>
                 </tbody>
@@ -46,4 +46,4 @@ const MyRidesBody = ({source, destination, date_of_travel, image, first_name, ho
 }
 
 
-export default MyRidesBody;
+export default AcceptedRejectedRidesBody;

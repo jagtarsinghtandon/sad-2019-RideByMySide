@@ -12,10 +12,13 @@ import Rides from './Components/Rides';
 import AddRides from './Components/AddRides';
 import RideRequestsList from './Components/RideRequestsList';
 import MyRidesList from './Components/MyRidesList';
+import AcceptedRejectedList from './Components/AcceptedRejectedList';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
+//import UpdateProfileFetch from './Components/UpdateProfileFetch';
+import UpdateProfile from './Components/UpdateProfile';
 
 
 
@@ -34,12 +37,18 @@ class App extends Component {
       profiles: [],
       date_of_travel: '',
       hobbies: '',
+      first_name:'',
+      last_name:'',
+      dob:'',
+      mobileno:'',
       fetchedRides: [],
       token: '',
       fetchrequestrides: [],
       img: '',
       imgstring: '', name: '', destination: '', person_id: '', ride_id: '',
-      getmyrides: []
+      getmyrides: [],
+      updateprofiles:[],
+      acceptedrejectedrides:[]
     };
 
   }
@@ -49,6 +58,68 @@ class App extends Component {
 
     this.setState({ route: route });
   }
+
+  onSubmitCreate = (source, destination, date )  =>  {
+    console.log("Addddding a ride"+ source, destination, date, this.state.logged_in_person_id)
+    console.log("token passed in create "+this.state.tokens)
+    fetch('http://localhost:9000/createRide', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+       },
+        body: JSON.stringify({
+            Source: source,
+            Destination: destination,
+            Date: date,
+            Person_Id : this.state.logged_in_person_id
+        })
+    })
+
+        .then(response => response.json())
+        .then(ridedata => this.setState({ ridess: ridedata.ride }));
+
+        alert('Ride successfully added!')
+        
+     
+
+
+}
+
+  onSubmitUpdate  = (first_name, last_name, email, dob, mobileno, hobbies, image) => 
+  {
+    
+    fetch('http://localhost:9000/updateprofile', {
+          method: 'get',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              First_Name: first_name,
+              Last_Name: last_name,
+              Email: email,
+              Dob: dob,
+              Mobileno: mobileno,
+               Hobbies: hobbies,
+              Image:image,
+              Person_Id: this.state.logged_in_person_id
+           
+        })
+      })
+      
+      .then((response) => {
+          response.json()
+          if(response.status === 500)
+          alert("Something went wrong")
+          else
+          {
+              this.setState({ updateprofiles: response.updateprofile},console.log('success'))
+       
+          }
+      })
+  
+  }
+  
+
+
+
 
   onAcceptedRides = (source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id) => {
     console.log("yeh kiya request accept" + source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id)
@@ -65,12 +136,12 @@ class App extends Component {
         Person_Id: this.state.logged_in_person_id,
         Ride_Id: ride_id,
         Ride_Status: ride_accepted
-
+        
       })
     })
 
       .then(response => response.json())
-      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+      // .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
 
     alert('You have accepted the ride!!')
 
@@ -96,7 +167,7 @@ class App extends Component {
     })
 
       .then(response => response.json())
-      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+      // .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
 
     alert('You have rejected the ride!!')
 
@@ -121,6 +192,44 @@ class App extends Component {
 
   }
 
+  onSubmitMyRides = () => {
+
+    fetch('http://localhost:9000/displaymyrides', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Person_Id: this.state.logged_in_person_id
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(getmyridedata => this.setState({ getmyrides: getmyridedata.riderequests }))
+
+    this.setState({ route: "AcceptedMyRides" });
+
+
+  }
+
+  onSubmitAcceptedRejected = () => {
+
+    fetch('http://localhost:9000/acceptedrejectedrides', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Person_Id: this.state.logged_in_person_id
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(getmyridedata => this.setState({ acceptedrejectedrides: getmyridedata.acceptreject }))
+
+    this.setState({ route: "AcceptedRejectedRides" });
+
+
+  }
+
 
 
 
@@ -129,7 +238,26 @@ class App extends Component {
     console.log("yeh beja request" + name, source, destination, date_of_travel, hobbies, person_id, ride_id)
 
 
-
+    // const b64toBlob = (imgstring, contentType='', sliceSize=512) => {
+    //   const byteCharacters = atob(imgstring);
+    //   const byteArrays = [];
+    
+    //   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    //     const slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+    //     const byteNumbers = new Array(slice.length);
+    //     for (let i = 0; i < slice.length; i++) {
+    //       byteNumbers[i] = slice.charCodeAt(i);
+    //     }
+    
+    //     const byteArray = new Uint8Array(byteNumbers);
+    //     byteArrays.push(byteArray);
+    //   }
+    
+    //   const blob = new Blob(byteArrays, {type: contentType});
+    //   return blob;
+    // }
+    // console.log(b64toBlob)
     fetch('http://localhost:9000/checkrequestride', {
       method: 'post',
       headers: {
@@ -156,7 +284,7 @@ class App extends Component {
               'Authorization': "Bearer " + this.state.tokens
             },
             body: JSON.stringify({
-              Imgstring: imgstring,
+              Imgblob: this.state.logged_in_person_photo,
               First_Name: this.state.logged_in_first_name,
               Source: source,
               Destination: destination,
@@ -226,6 +354,8 @@ class App extends Component {
                   this.setState({ logged_in_first_name: name })
                   let id = profiledata.profile.PERSON_ID
                   this.setState({ logged_in_person_id: id })
+                  let photo = profiledata.profile.IMAGE.data
+                  this.setState({ logged_in_person_photo: photo })
 
                   this.setState({ profiles: profiledata.profile }, console.log("in submit"))
 
@@ -275,11 +405,11 @@ class App extends Component {
   }
 
   render() {
-    const { route, fetchedRides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
+    const { route,logged_in_person_photo, fetchedRides,acceptedrejectedrides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
 
     console.log("photo" + tokens);
 
-    console.log("profilessss" + logged_in_person_id + logged_in_first_name);
+    console.log("profilessss" + logged_in_person_id + logged_in_first_name + logged_in_person_photo);
 
     console.log("vg43g5g5g35g" + profiles.FIRST_NAME)
     console.log("photo" + imgstring + "cccc" + imageStr);
@@ -288,7 +418,7 @@ class App extends Component {
 
     console.log("yeh kiya fetch data" + fetchrequestrides);
     console.log("yeh deekha fetch data" + getmyrides);
-
+    console.log("yeh fetch kiya list" + acceptedrejectedrides);
 
     return (
 
@@ -339,14 +469,26 @@ class App extends Component {
                       : (route === 'MyProfile' ?
                         <div>
                           <Profile onRouteChange={this.onRouteChange} />
-                          <ProfileFetch profiles={profiles} />
+                          <ProfileFetch profiles={profiles} onRouteChange={this.onRouteChange} />
                         </div>
+
+                      : (route === 'UpdateProfile' ?
+                      <div>
+                        <Profile onRouteChange={this.onRouteChange}/> 
+
+                       
+                            <UpdateProfile profiles={profiles} onRouteChange={this.onRouteChange} onSubmitUpdate={this.onSubmitUpdate} /> 
+                            {/* <UpdateProfileFetch profiles={profiles} onRouteChange={this.onRouteChange}  />  */}
+                           
+                         
+                      </div>
 
                         : (route === 'Rides' ?
                           <div>
                             <Profile onRouteChange={this.onRouteChange} />
 
-                            < Rides onRouteChange={this.onRouteChange} onFetchRequestedRides={this.onFetchRequestedRides} />
+                            < Rides onRouteChange={this.onRouteChange} onFetchRequestedRides={this.onFetchRequestedRides}
+                            onSubmitMyRides={this.onSubmitMyRides}  onSubmitAcceptedRejected={this.onSubmitAcceptedRejected}/>
                           </div>
 
                           : (route === 'FetchedRequestedRides' ?
@@ -362,15 +504,22 @@ class App extends Component {
                               <div>
                                 <Profile onRouteChange={this.onRouteChange} />
 
-                                < AddRides onRouteChange={this.onRouteChange} />
+                                < AddRides onSubmitCreate={this.onSubmitCreate} />
                               </div>
 
                               : (route === 'AcceptedMyRides' ?
                                 <div>
 
                                   <Profile onRouteChange={this.onRouteChange} />
-                                  < MyRidesList getmyrides={getmyrides} onRouteChange={this.onRouteChange} />
+                                  < MyRidesList getmyrides={getmyrides} onRouteChange={this.onRouteChange}  />
                                 </div>
+
+                              : (route === 'AcceptedRejectedRides' ?
+                              <div>
+
+                                <Profile onRouteChange={this.onRouteChange} />
+                                < AcceptedRejectedList acceptedrejectedrides={acceptedrejectedrides} onRouteChange={this.onRouteChange} />
+                              </div>
 
                                 : (route === 'home',
                                   <div>
@@ -390,6 +539,8 @@ class App extends Component {
               )
             )
 
+          )
+          )
           )
         }
 

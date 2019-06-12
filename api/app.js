@@ -15,6 +15,9 @@ var acceptRideRouter = require("./routes/acceptRide");
 var checkRequestRideRouter = require("./routes/checkRequestRide");
 var fetchrequestedrideRouter = require("./routes/fetchrequestedrides");
 var requestedrideRouter = require("./routes/requestedride");
+var updateprofileRouter = require("./routes/updateprofile");
+var ridesacceptrejectRouter= require("./routes/ridesacceptreject");
+var myRidesRouter = require("./routes/myRides");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 
@@ -31,6 +34,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(myRidesRouter);
+
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
@@ -40,6 +45,9 @@ app.use(acceptRideRouter);
 app.use(requestedrideRouter);
 app.use(checkRequestRideRouter);
 app.use(fetchrequestedrideRouter);
+app.use(updateprofileRouter);
+app.use(ridesacceptrejectRouter);
+
 
 
 //catch 404 and forward to error handler
