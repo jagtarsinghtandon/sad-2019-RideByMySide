@@ -28,6 +28,8 @@ const RideRequestsList = ({ fetchrequestrides, onRouteChange, onAcceptedRides, o
               
               ride_id={fetchrequestrides[i].ride_RIDE_ID}
 
+              requested_person_id={fetchrequestrides[i].REQUESTED_PERSON_ID}
+
               onAcceptedRides={onAcceptedRides}
 
               

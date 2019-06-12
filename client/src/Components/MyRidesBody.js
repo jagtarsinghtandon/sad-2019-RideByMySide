@@ -2,7 +2,7 @@ import React from 'react';
 import './stylesheet.css';
 
 
-const MyRidesBody = ({ source, destination, date_of_travel, image, first_name, hobbies }) => {
+const MyRidesBody = ({source, destination, ride_accepted,  ride_rejected,date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id }) => {
 
 
     return (

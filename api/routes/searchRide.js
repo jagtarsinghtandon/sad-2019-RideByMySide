@@ -31,7 +31,6 @@ searchRide.post('/search', verifyToken, (req, res) => {
         include: [{
           model: person, attributes: ['FIRST_NAME', 'IMAGE', 'HOBBIES']
         }]
-        // raw: true
       })
         .then(function (search) {
           res.json({ searchedride: search })

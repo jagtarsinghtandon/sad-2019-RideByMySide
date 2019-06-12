@@ -4,11 +4,10 @@ import SearchedRidesBody from './SearchRidesBody';
 
 
 
-const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide, onRouteChange }) => {
+const RideList = ({ fetchedRides, onRequestRide, onRouteChange }) => {
   return (
     <div >
       <SearchedRidesHeader
-      //  length={fetchedRidesLength}
 
       />
       {
@@ -25,7 +24,7 @@ const RideList = ({ fetchedRides, fetchedRidesLength, onRequestRide, onRouteChan
             hobbies={fetchedRides[i].Person.HOBBIES}
             person_id={fetchedRides[i].person_PERSON_ID}
             ride_id={fetchedRides[i].RIDE_ID}
-            
+            requested_person_id={fetchedRides[i].REQUESTED_PERSON_ID}
             
        
           onRequestRide = {onRequestRide}

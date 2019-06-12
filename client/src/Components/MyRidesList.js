@@ -10,24 +10,24 @@ const MyRidesList = ({ getmyrides, onRouteChange }) => {
       <MyRidesHeader onRouteChange={onRouteChange} />
       {
 
+        <MyRidesBody
+          source={getmyrides.SOURCE}
+          destination={getmyrides.DESTINATION}
+          date_of_travel={getmyrides.DATE_TIME_OF_RIDE}
 
+          hobbies={getmyrides.HOBBIES}
 
-        // getmyrides.map((file, i) => {
-        //   return (
-            <MyRidesBody
-              source={getmyrides.SOURCE}
-              destination={getmyrides.DESTINATION}
-              date_of_travel={getmyrides.DATE_TIME_OF_RIDE}
+         // image={getmyrides.IMAGE.data}
 
-              hobbies={getmyrides.HOBBIES}
+          first_name={getmyrides.FIRST_NAME}
 
-              image={getmyrides.IMAGE.data}
+          person_id={getmyrides.PERSON_ID}
+              
+          ride_id={getmyrides.ride_RIDE_ID}
 
-              first_name={getmyrides.FIRST_NAME}
+          requested_person_id={getmyrides.REQUESTED_PERSON_ID}
+        />
 
-            />
-        //   );
-        // })
       }
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import './stylesheet.css';
 
 
-const SearchedRidesBody = ({ source, destination, date_of_travel, image, name, hobbies, person_id, ride_id, onRequestRide, onRouteChange }) => {
+const SearchedRidesBody = ({ source, destination, date_of_travel, image, name, hobbies, person_id, ride_id,requested_person_id, onRequestRide, onRouteChange }) => {
 
 
     var imgstring = []
@@ -41,7 +41,7 @@ const SearchedRidesBody = ({ source, destination, date_of_travel, image, name, h
                         <div >
                             <input
 
-                                onClick={() => onRequestRide(imgstring, name, source, destination, date_of_travel, hobbies, person_id, ride_id)}
+                                onClick={() => onRequestRide(imgstring, name, source, destination, date_of_travel, hobbies, person_id, ride_id,requested_person_id)}
                                 className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
                                 type="submit"
                                 value="Request this ride"
