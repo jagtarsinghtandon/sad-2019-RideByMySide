@@ -2,6 +2,7 @@ const express = require("express")
 const login = express.Router()
 const jwt = require("jsonwebtoken")
 const person = require("../models/Person")
+var con = require("../bin/connection");
 
 login.post('/login',(req,res)=>{
 

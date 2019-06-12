@@ -15,7 +15,8 @@ var acceptRideRouter = require("./routes/acceptRide");
 var checkRequestRideRouter = require("./routes/checkRequestRide");
 var fetchRequestRidesRouter = require("./routes/fetchRequestRides");
 var requestRideRouter = require("./routes/requestRide");
-var displayRideRequestsRouter = require("./routes/displayRideRequests")
+var displayRideRequestsRouter = require("./routes/displayRideRequests");
+var updateprofileRouter = require("./routes/updateProfile");
 //var createRideRouter = require("./routes/createRide");
 
 
@@ -44,6 +45,7 @@ app.use(requestRideRouter);
 app.use(fetchRequestRidesRouter);
 app.use(checkRequestRideRouter);
 app.use(displayRideRequestsRouter);
+app.use(updateprofileRouter);
  //catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

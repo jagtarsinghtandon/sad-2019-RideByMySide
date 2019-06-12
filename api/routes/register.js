@@ -34,10 +34,10 @@ const err = (err)=>{
         })
          
         .catch(err)
-        .finally(()=>{
-            con.close();
-            console.log('connection closed');
-        });
+        // .finally(()=>{
+        //     con.close();
+        //     console.log('connection closed');
+        // });
 
     
             
