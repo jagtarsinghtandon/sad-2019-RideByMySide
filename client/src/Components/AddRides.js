@@ -11,13 +11,10 @@ class AddRides extends Component {
 
 
         }
-        // this.onChange = this.onChange.bind(this)
-        // this.onSubmit = this.onSubmit.bind(this)
+        
     }
 
-    // onChange(e) {
-    //     this.setState({ [e.target.name]: e.target.value })
-    // }
+   
 
     onSourceChange = (event) => {
         this.setState({ source: event.target.value })
@@ -36,9 +33,6 @@ class AddRides extends Component {
     render() {
         const { source, destination, date, onRouteChange } = this.state;
 
-        // const ridess = this.state;
-        // //const { onRouteChange } = this.props;
-        // console.log(ridess);
 
         const { onSubmitCreate } = this.props;
 

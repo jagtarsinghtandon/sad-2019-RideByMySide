@@ -45,22 +45,14 @@ const MyProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image,
                         </div>
                     </div>
                     <div class="col-md-2">
-                    {/* <input 
+                    <input 
                             
-                            onClick={() =>  onRouteChange('')}
+                            onClick={() =>  onRouteChange('UpdateProfile')}
 
                             className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                             type="submit"
                             value="Update Profile"
-                        /> */}
-                        <button
-                            
-                            onClick={alert("ihih")}
-
-                            className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                            
-                            value="Update Profile"
-                            >hiiiiiiii</button>
+                        />
                     </div>
                 </div>
                 <div class="row">

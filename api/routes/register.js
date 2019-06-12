@@ -15,7 +15,11 @@ register.post('/register', (req, res) => {
     const im_email = req.body.email;
 
     const err = (err) => {
-        console.error("Error: ", err);
+        console.error("Error: ", err);   // .catch(err)
+        // .finally(() => {
+        //     con.close();
+        //     console.log('connection closed');
+        // });
     }
 
 
@@ -31,11 +35,7 @@ register.post('/register', (req, res) => {
 
         })
 
-        .catch(err)
-        .finally(() => {
-            con.close();
-            console.log('connection closed');
-        });
+     
 
 
 

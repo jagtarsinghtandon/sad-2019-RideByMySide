@@ -39,6 +39,7 @@ class Register extends Component {
                     alert("User already exists")
                 else {
                     this.setState({ registers: response.registers }, console.log('success'))
+                    alert('User Registered')
                 }
             })
 

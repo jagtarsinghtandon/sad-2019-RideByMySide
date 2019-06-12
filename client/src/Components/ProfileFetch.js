@@ -15,6 +15,10 @@ const ProfileFetch = ({ profiles }) => {
               first_name={profiles.FIRST_NAME}
               last_name={profiles.LAST_NAME}
               person_id={profiles.PERSON_ID}
+              dob={profiles.DOB}
+              mobileno={profiles.CONTACT_NO}
+              hobbies={profiles.HOBBIES}
+              image={profiles.IMAGE.data}
 
             />
          

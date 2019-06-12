@@ -12,10 +12,13 @@ import Rides from './Components/Rides';
 import AddRides from './Components/AddRides';
 import RideRequestsList from './Components/RideRequestsList';
 import MyRidesList from './Components/MyRidesList';
+import AcceptedRejectedList from './Components/AcceptedRejectedList';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
+//import UpdateProfileFetch from './Components/UpdateProfileFetch';
+import UpdateProfile from './Components/UpdateProfile';
 
 
 
@@ -34,15 +37,18 @@ class App extends Component {
       profiles: [],
       date_of_travel: '',
       hobbies: '',
+      first_name:'',
+      last_name:'',
+      dob:'',
+      mobileno:'',
       fetchedRides: [],
       token: '',
       fetchrequestrides: [],
       img: '',
       imgstring: '', name: '', destination: '', person_id: '', ride_id: '',
-      //  logged_in_person_id: '',
-      // logged_in_first_name: '',
       getmyrides: [],
-      ridess:[]
+      updateprofiles:[],
+      acceptedrejectedrides:[]
     };
 
   }
@@ -74,23 +80,60 @@ class App extends Component {
 
         alert('Ride successfully added!')
         
-      //  this.setState({ route: "Add Rides" });
+     
 
 
 }
-  onAcceptedRides = (source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id ) => {
-    console.log("yeh kiya request accept" + source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
 
-console.log("yeh kiya request accept" +  person_id, ride_id)
+  onSubmitUpdate  = (first_name, last_name, email, dob, mobileno, hobbies, image) => 
+  {
     
+    fetch('http://localhost:9000/updateprofile', {
+          method: 'get',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+              First_Name: first_name,
+              Last_Name: last_name,
+              Email: email,
+              Dob: dob,
+              Mobileno: mobileno,
+               Hobbies: hobbies,
+              Image:image,
+              Person_Id: this.state.logged_in_person_id
+           
+        })
+      })
+      
+      .then((response) => {
+          response.json()
+          if(response.status === 500)
+          alert("Something went wrong")
+          else
+          {
+              this.setState({ updateprofiles: response.updateprofile},console.log('success'))
+       
+          }
+      })
+  
+  }
+  
+
+
+
+
+  onAcceptedRides = (source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id) => {
+    console.log("yeh kiya request accept" + source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id)
+
+    console.log("yeh kiya request accept" + person_id, ride_id)
+
 
     fetch('http://localhost:9000/acceptride', {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         First_Name: this.state.logged_in_first_name,
-        Requested_Person_Id: this.state.logged_in_person_id,
-        Person_Id: person_id,
+        Requested_Person_Id: requested_person_id,
+        Person_Id: this.state.logged_in_person_id,
         Ride_Id: ride_id,
         Ride_Status: ride_accepted
         
@@ -98,35 +141,35 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
     })
 
       .then(response => response.json())
-      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+      // .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
 
-      alert('You have accepted the ride!!')
+    alert('You have accepted the ride!!')
 
   }
 
-  onRejectedRides = (source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id) => {
-    console.log("yeh kiya request accept" + source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
+  onRejectedRides = (source, destination, ride_rejected, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id) => {
+    console.log("yeh kiya request accept" + source, destination, ride_rejected, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id)
 
-console.log("yeh kiya request accept" +  person_id, ride_id)
-    
+    console.log("yeh kiya request accept" + person_id, ride_id)
+
 
     fetch('http://localhost:9000/acceptride', {
       method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         First_Name: this.state.logged_in_first_name,
-        Requested_Person_Id: this.state.logged_in_person_id,
-        Person_Id: person_id,
+        Requested_Person_Id: requested_person_id,
+        Person_Id: this.state.logged_in_person_id,
         Ride_Id: ride_id,
         Ride_Status: ride_rejected
-        
+
       })
     })
 
       .then(response => response.json())
-      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+      // .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
 
-      alert('You have rejected the ride!!')
+    alert('You have rejected the ride!!')
 
   }
 
@@ -149,6 +192,44 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
 
   }
 
+  onSubmitMyRides = () => {
+
+    fetch('http://localhost:9000/displaymyrides', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Person_Id: this.state.logged_in_person_id
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(getmyridedata => this.setState({ getmyrides: getmyridedata.riderequests }))
+
+    this.setState({ route: "AcceptedMyRides" });
+
+
+  }
+
+  onSubmitAcceptedRejected = () => {
+
+    fetch('http://localhost:9000/acceptedrejectedrides', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Person_Id: this.state.logged_in_person_id
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(getmyridedata => this.setState({ acceptedrejectedrides: getmyridedata.acceptreject }))
+
+    this.setState({ route: "AcceptedRejectedRides" });
+
+
+  }
+
 
 
 
@@ -157,7 +238,26 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
     console.log("yeh beja request" + name, source, destination, date_of_travel, hobbies, person_id, ride_id)
 
 
-
+    // const b64toBlob = (imgstring, contentType='', sliceSize=512) => {
+    //   const byteCharacters = atob(imgstring);
+    //   const byteArrays = [];
+    
+    //   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    //     const slice = byteCharacters.slice(offset, offset + sliceSize);
+    
+    //     const byteNumbers = new Array(slice.length);
+    //     for (let i = 0; i < slice.length; i++) {
+    //       byteNumbers[i] = slice.charCodeAt(i);
+    //     }
+    
+    //     const byteArray = new Uint8Array(byteNumbers);
+    //     byteArrays.push(byteArray);
+    //   }
+    
+    //   const blob = new Blob(byteArrays, {type: contentType});
+    //   return blob;
+    // }
+    // console.log(b64toBlob)
     fetch('http://localhost:9000/checkrequestride', {
       method: 'post',
       headers: {
@@ -184,7 +284,7 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
               'Authorization': "Bearer " + this.state.tokens
             },
             body: JSON.stringify({
-              Imgstring: imgstring,
+              Imgblob: this.state.logged_in_person_photo,
               First_Name: this.state.logged_in_first_name,
               Source: source,
               Destination: destination,
@@ -192,7 +292,6 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
               Hobbies: hobbies,
               Ride_Id: ride_id,
               Person_Id: person_id,
-              // Ride_Id: ride_id,
               Requested_Person_Id: this.state.logged_in_person_id
 
 
@@ -233,7 +332,6 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
               alert("invalid email or password")
             else {
               this.setState({ logins: response.logins }, console.log('success'))
-              // this.setState({ logged_in_person_id: id })
 
               alert('Successfully logged in')
 
@@ -256,16 +354,11 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
                   this.setState({ logged_in_first_name: name })
                   let id = profiledata.profile.PERSON_ID
                   this.setState({ logged_in_person_id: id })
+                  let photo = profiledata.profile.IMAGE.data
+                  this.setState({ logged_in_person_photo: photo })
 
                   this.setState({ profiles: profiledata.profile }, console.log("in submit"))
 
-
-
-
-
-                  // this.setState({ tokens: token })
-                  // this.setState({ logged_in_first_name: profiledata.FIRST_NAME })
-                  // this.setState({ logged_in_person_id: profiledata.PERSON_ID })
 
                 });
 
@@ -312,19 +405,11 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
   }
 
   render() {
-    const { route, fetchedRides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
-    // var fetchedRidesLength = fetchedRides.length;
+    const { route,logged_in_person_photo, fetchedRides,acceptedrejectedrides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
 
-
-
-    // const logged_in_first_name =  profiles.FIRST_NAME
-
-    // const logged_in_person_id =  profiles.PERSON_ID
-    // console.log("length dekh" + fetchedRides.fetchedRides);
-    // console.log("length dekh" + fetchedRides.length);
     console.log("photo" + tokens);
 
-    console.log("profilessss" + logged_in_person_id + logged_in_first_name);
+    console.log("profilessss" + logged_in_person_id + logged_in_first_name + logged_in_person_photo);
 
     console.log("vg43g5g5g35g" + profiles.FIRST_NAME)
     console.log("photo" + imgstring + "cccc" + imageStr);
@@ -333,7 +418,7 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
 
     console.log("yeh kiya fetch data" + fetchrequestrides);
     console.log("yeh deekha fetch data" + getmyrides);
-
+    console.log("yeh fetch kiya list" + acceptedrejectedrides);
 
     return (
 
@@ -370,7 +455,7 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
                   : (route === 'SearchedRides' ?
                     <div>
                       <Profile onRouteChange={this.onRouteChange} />
-                      < RideList fetchedRides={fetchedRides} 
+                      < RideList fetchedRides={fetchedRides}
                         onRouteChange={this.onRouteChange} onRequestRide={this.onRequestRide} />
                     </div>
 
@@ -384,30 +469,42 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
                       : (route === 'MyProfile' ?
                         <div>
                           <Profile onRouteChange={this.onRouteChange} />
-                          <ProfileFetch profiles={profiles} />
+                          <ProfileFetch profiles={profiles} onRouteChange={this.onRouteChange} />
                         </div>
+
+                      : (route === 'UpdateProfile' ?
+                      <div>
+                        <Profile onRouteChange={this.onRouteChange}/> 
+
+                       
+                            <UpdateProfile profiles={profiles} onRouteChange={this.onRouteChange} onSubmitUpdate={this.onSubmitUpdate} /> 
+                            {/* <UpdateProfileFetch profiles={profiles} onRouteChange={this.onRouteChange}  />  */}
+                           
+                         
+                      </div>
 
                         : (route === 'Rides' ?
                           <div>
                             <Profile onRouteChange={this.onRouteChange} />
 
-                            < Rides onRouteChange={this.onRouteChange} onFetchRequestedRides={this.onFetchRequestedRides} />
+                            < Rides onRouteChange={this.onRouteChange} onFetchRequestedRides={this.onFetchRequestedRides}
+                            onSubmitMyRides={this.onSubmitMyRides}  onSubmitAcceptedRejected={this.onSubmitAcceptedRejected}/>
                           </div>
 
                           : (route === 'FetchedRequestedRides' ?
                             <div>
 
                               <Profile onRouteChange={this.onRouteChange} />
-                              < RideRequestsList fetchr equestrides={fetchrequestrides} onRouteChange={this.onRouteChange}
-                               onAcceptedRides={this.onAcceptedRides} onRejectedRides={this.onRejectedRides} />
+                              < RideRequestsList fetchrequestrides={fetchrequestrides} onRouteChange={this.onRouteChange}
+                                onAcceptedRides={this.onAcceptedRides} onRejectedRides={this.onRejectedRides} />
                             </div>
 
 
                             : (route === 'AddRides' ?
                               <div>
                                 <Profile onRouteChange={this.onRouteChange} />
-                                 {/* <Rides onRouteChange={this.onRouteChange}></Rides> */}
-                                <AddRides  onSubmitCreate={this.onSubmitCreate}  />
+
+                                < AddRides onSubmitCreate={this.onSubmitCreate} />
                               </div>
 
                             
@@ -418,8 +515,15 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
                                 <div>
 
                                   <Profile onRouteChange={this.onRouteChange} />
-                                  < MyRidesList getmyrides={getmyrides} onRouteChange={this.onRouteChange} />
+                                  < MyRidesList getmyrides={getmyrides} onRouteChange={this.onRouteChange}  />
                                 </div>
+
+                              : (route === 'AcceptedRejectedRides' ?
+                              <div>
+
+                                <Profile onRouteChange={this.onRouteChange} />
+                                < AcceptedRejectedList acceptedrejectedrides={acceptedrejectedrides} onRouteChange={this.onRouteChange} />
+                              </div>
 
                                 : (route === 'home',
                                   <div>
@@ -438,8 +542,10 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
                 )
               )
             )
-            )
-          
+
+          )
+          )
+          )
         }
 
 
@@ -451,7 +557,7 @@ console.log("yeh kiya request accept" +  person_id, ride_id)
 
           </video>
           <div className="text pt6">
-          <div class=" nav-item nav-link black active  f3 fw4 ph0 mh0 pa0">CARPPOOL <br />OF  <br />DIGITAL <br />AGE</div>
+            <div className=" nav-item nav-link black active  f3 fw4 ph0 mh0 pa0">CARPPOOL <br />OF  <br />DIGITAL <br />AGE</div>
           </div>
         </div>
 

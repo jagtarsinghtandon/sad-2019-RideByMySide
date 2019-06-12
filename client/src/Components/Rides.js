@@ -3,7 +3,7 @@ import React from 'react';
 
 
 
-const Rides = ({ onRouteChange, onFetchRequestedRides }) => {
+const Rides = ({ onRouteChange, onFetchRequestedRides, onSubmitMyRides,onSubmitAcceptedRejected }) => {
 
     return (
         <div className="pack pt5">
@@ -11,7 +11,7 @@ const Rides = ({ onRouteChange, onFetchRequestedRides }) => {
 
                 <div >
                     <input
-                        onClick = {() => onRouteChange('AcceptedMyRides')}
+                        onClick={() => onSubmitMyRides()}
                         className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
                         type="submit"
                         value="My Rides"
@@ -24,7 +24,7 @@ const Rides = ({ onRouteChange, onFetchRequestedRides }) => {
 
                         className="btn ph3 pv2 input-reset ba b--black bg-green pull grow pointer f6 dib"
                         type="submit"
-                        value="Ride Requests"
+                        value="Ride Requests List"
                     />
                 </div>
 
@@ -34,6 +34,15 @@ const Rides = ({ onRouteChange, onFetchRequestedRides }) => {
                         className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
                         type="submit"
                         value="Add a Ride"
+                    />
+                </div>
+
+                <div >
+                    <input
+                        onClick={() => onSubmitAcceptedRejected()}
+                        className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
+                        type="submit"
+                        value="Accepted/Rejected Rides"
                     />
                 </div>
 
