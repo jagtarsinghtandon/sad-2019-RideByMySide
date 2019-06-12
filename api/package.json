@@ -6,10 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt-nodejs": "0.0.3",
-=======
->>>>>>> df97b79d2ce560c7e6155cd6b1c5423d7e18a547
     "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

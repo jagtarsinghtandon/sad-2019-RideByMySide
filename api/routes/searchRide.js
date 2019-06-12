@@ -1,37 +1,4 @@
 var express = require("express");
-<<<<<<< HEAD
-var router = express.Router();
-const cors = require("cors")
-
-router.use(cors())
-
-router.post('/search', (req, res) => {
-    
-    const source =  req.body.Source;
-    const destination = req.body.Destination;
-
-
-    var mysql = req.app.get('mysql');
-
-        var queryString = "SELECT SOURCE, DESTINATION,DATE_TIME_OF_RIDE FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
-        var filter = [source, destination];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
-          
-            
-        if (!err){
-            res.json({rides:rows})
-
-        }
-        else
-        console.log(' ride data is not showing \n ERROR :' + err);
-})
-});
-
-
-
-module.exports = router
-=======
 var searchRide = express.Router();
 //const cors = require("cors")
 const ride = require("../models/Rides")
@@ -96,4 +63,3 @@ function verifyToken(req, res, next) {
 
 module.exports = searchRide
 
->>>>>>> df97b79d2ce560c7e6155cd6b1c5423d7e18a547

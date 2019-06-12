@@ -50,7 +50,7 @@ onFnameChange = (event) => {
         
         // const profile_in_first_name =this.state ;
          const {profile_in_first_name,first_name, last_name, email, dob, mobileno, hobbies, image} = this.state;
-        {
+        
          
         
         
@@ -215,7 +215,7 @@ onFnameChange = (event) => {
         
   //}
        // }
- } 
+ 
 
 
 } 
