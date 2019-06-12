@@ -7,11 +7,15 @@ import Search from './Components/Search';
 import AboutUs from './Components/AboutUs';
 import ContactUs from './Components/ContactUs';
 import RideList from './Components/RideList';
+import ProfileFetch from './Components/ProfileFetch';
+import Rides from './Components/Rides';
+import AddRides from './Components/AddRides';
+import RideRequestsList from './Components/RideRequestsList';
+import MyRidesList from './Components/MyRidesList';
 import sample from './driving.mp4';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons/css/tachyons.min.css';
 import './App.css';
-import SearchedRidesBody from './Components/SearchRidesBody';
 
 
 
@@ -24,150 +28,418 @@ class App extends Component {
       searchedRides: [],
       source: '',
       dest: '',
+      email: '',
+      password: '',
+      logins: [],
+      profiles: [],
       date_of_travel: '',
       hobbies: '',
-      fetchedRides:[],
+      fetchedRides: [],
+      token: '',
+      fetchrequestrides: [],
       img: '',
-      imgstring: '', name:'', destination:'', person_id:'', ride_id:''
+      imgstring: '', name: '', destination: '', person_id: '', ride_id: '',
+      //  logged_in_person_id: '',
+      // logged_in_first_name: '',
+      getmyrides: [],
+      ridess:[]
     };
 
   }
 
 
   onRouteChange = (route) => {
-    
+
     this.setState({ route: route });
   }
 
-     
-  onRequestRide = (imgstring,  name, source, destination, date_of_travel, hobbies, person_id, ride_id) => {
-    console.log("yeh beja request" +name, source, destination, date_of_travel, hobbies, person_id, ride_id)
+  onSubmitCreate = (source, destination, date )  =>  {
+    console.log("Addddding a ride"+ source, destination, date, this.state.logged_in_person_id)
+    console.log("token passed in create "+this.state.tokens)
+    fetch('http://localhost:9000/createRide', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+       },
+        body: JSON.stringify({
+            Source: source,
+            Destination: destination,
+            Date: date,
+            Person_Id : this.state.logged_in_person_id
+        })
+    })
+
+        .then(response => response.json())
+        .then(ridedata => this.setState({ ridess: ridedata.ride }));
+
+        alert('Ride successfully added!')
+        
+      //  this.setState({ route: "Add Rides" });
+
+
+}
+  onAcceptedRides = (source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id ) => {
+    console.log("yeh kiya request accept" + source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
+
+console.log("yeh kiya request accept" +  person_id, ride_id)
     
+
+    fetch('http://localhost:9000/acceptride', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        First_Name: this.state.logged_in_first_name,
+        Requested_Person_Id: this.state.logged_in_person_id,
+        Person_Id: person_id,
+        Ride_Id: ride_id,
+        Ride_Status: ride_accepted
+        
+      })
+    })
+
+      .then(response => response.json())
+      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+
+      alert('You have accepted the ride!!')
+
+  }
+
+  onRejectedRides = (source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id) => {
+    console.log("yeh kiya request accept" + source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
+
+console.log("yeh kiya request accept" +  person_id, ride_id)
+    
+
+    fetch('http://localhost:9000/acceptride', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        First_Name: this.state.logged_in_first_name,
+        Requested_Person_Id: this.state.logged_in_person_id,
+        Person_Id: person_id,
+        Ride_Id: ride_id,
+        Ride_Status: ride_rejected
+        
+      })
+    })
+
+      .then(response => response.json())
+      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+
+      alert('You have rejected the ride!!')
+
+  }
+
+  onFetchRequestedRides = () => {
+
+    fetch('http://localhost:9000/fetchrequestedrides', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Person_Id: this.state.logged_in_person_id
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(fetchridedata => this.setState({ fetchrequestrides: fetchridedata.fetchrequestrides }))
+
+    this.setState({ route: "FetchedRequestedRides" });
+
+
+  }
+
+
+
+
+
+  onRequestRide = (imgstring, name, source, destination, date_of_travel, hobbies, person_id, ride_id) => {
+    console.log("yeh beja request" + name, source, destination, date_of_travel, hobbies, person_id, ride_id)
+
 
 
     fetch('http://localhost:9000/checkrequestride', {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+      },
       body: JSON.stringify({
-      
-          Logged_In_Person_Id : "36",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
-          Ride_Id : ride_id
-        })
-  })
-        
-  .then((response) => {
-    response.json()
-    if(response.status === 200)
-    alert("Ride already requested")
-    else
-    {
-        
-    fetch('http://localhost:9000/requestRide', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-          Imgstring: imgstring,
-          First_Name: name,
-          Source: source,
-          Destination: destination,
-          Date_Of_Travel : date_of_travel,
-          Hobbies : hobbies,
-          Ride_Id : ride_id,
-          Person_Id : person_id ,    
-          Ride_Id : ride_id,
-          Requested_Person_Id : "36"
-         
-        
+
+        Logged_In_Person_Id: this.state.logged_in_person_id,   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
+        Ride_Id: ride_id
       })
-  })
-  
-  .then(response => response.json())
-  .then(rideRequestdata => this.setState({ rideRequested: rideRequestdata.rideRequested}))
-    
-  alert('Congratulations, your ride has been Requested')
-    }
-})
-        
-        }
-  
-    
-    onSubmitSearch = (source, dest, date_of_travel, hobbies) => {
-      console.log("in submit" +source +dest+ date_of_travel + hobbies)
-        
-      
-      fetch('http://localhost:9000/search', {
-          method: 'post',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+    })
+
+      .then((response) => {
+        response.json()
+        if (response.status === 200)
+          alert("Ride already requested")
+        else {
+
+          fetch('http://localhost:9000/requestRide', {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer " + this.state.tokens
+            },
+            body: JSON.stringify({
+              Imgstring: imgstring,
+              First_Name: this.state.logged_in_first_name,
               Source: source,
-              Destination: dest,
-              Date_Of_Travel : date_of_travel,
-              Hobbies : hobbies
-            
+              Destination: destination,
+              Date_Of_Travel: date_of_travel,
+              Hobbies: hobbies,
+              Ride_Id: ride_id,
+              Person_Id: person_id,
+              // Ride_Id: ride_id,
+              Requested_Person_Id: this.state.logged_in_person_id
+
+
+            })
+          })
+
+            .then(response => response.json())
+            .then(rideRequestdata => this.setState({ rideRequested: rideRequestdata.riderequest }))
+
+          alert('Congratulations, your ride has been Requested')
+        }
+      })
+
+  }
+
+  onSubmit = (email, password) => {
+    console.log("in submit" + email + password)
+    fetch('http://localhost:9000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Email: email,
+        Password: password
+
+      })
+    })
+
+
+
+      .then((response) => {
+        response.json()
+          .then((logindata) => {
+            let token = logindata.token
+            this.setState({ tokens: token })
+
+            console.log(token)
+            if (response.status === 500)
+              alert("invalid email or password")
+            else {
+              this.setState({ logins: response.logins }, console.log('success'))
+              // this.setState({ logged_in_person_id: id })
+
+              alert('Successfully logged in')
+
+              fetch('http://localhost:9000/profile', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': "Bearer " + token
+                },
+                body: JSON.stringify({
+                  Email: email,
+                  Password: password
+
+                })
+              })
+                .then(response => response.json())
+                .then((profiledata) => {
+
+                  let name = profiledata.profile.FIRST_NAME
+                  this.setState({ logged_in_first_name: name })
+                  let id = profiledata.profile.PERSON_ID
+                  this.setState({ logged_in_person_id: id })
+
+                  this.setState({ profiles: profiledata.profile }, console.log("in submit"))
+
+
+
+
+
+                  // this.setState({ tokens: token })
+                  // this.setState({ logged_in_first_name: profiledata.FIRST_NAME })
+                  // this.setState({ logged_in_person_id: profiledata.PERSON_ID })
+
+                });
+
+              this.setState({ route: "Profile" });
+
+            }
+
           })
       })
 
-            .then(response => response.json())
-          .then(ridedata => this.setState({ fetchedRides: ridedata.rides}))
-            
-            this.setState({ route: "SearchedRides" });
-            
-          
-          }
+  }
+
+
+
+
+
+
+
+  onSubmitSearch = (source, dest, date_of_travel, hobbies, tokens) => {
+    console.log("in submit" + source + dest + date_of_travel + hobbies)
+
+
+    fetch('http://localhost:9000/search', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+      },
+      body: JSON.stringify({
+        Source: source,
+        Destination: dest,
+        Date_Of_Travel: date_of_travel
+
+      })
+    })
+
+      .then(response => response.json())
+      .then(ridedata =>
+        this.setState({ fetchedRides: ridedata.searchedride }))
+
+    this.setState({ route: "SearchedRides" });
+
+
+  }
 
   render() {
-    const { route, fetchedRides, img, rides, imgstring, imageStr, rideRequested } = this.state;
-    
-    console.log("length dekh" +fetchedRides.fetchedRides);
-    console.log("length dekh" +fetchedRides.length);
-    console.log("photo" + img);
-    
+    const { route, fetchedRides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
+    // var fetchedRidesLength = fetchedRides.length;
+
+
+
+    // const logged_in_first_name =  profiles.FIRST_NAME
+
+    // const logged_in_person_id =  profiles.PERSON_ID
+    // console.log("length dekh" + fetchedRides.fetchedRides);
+    // console.log("length dekh" + fetchedRides.length);
+    console.log("photo" + tokens);
+
+    console.log("profilessss" + logged_in_person_id + logged_in_first_name);
+
+    console.log("vg43g5g5g35g" + profiles.FIRST_NAME)
     console.log("photo" + imgstring + "cccc" + imageStr);
 
-    console.log("yeh dal gaya ride request table mein"+rideRequested);
-    var fetchedRidesLength = fetchedRides.length;
-    
+    console.log("yeh dal gaya ride request table mein" + rideRequested);
+
+    console.log("yeh kiya fetch data" + fetchrequestrides);
+    console.log("yeh deekha fetch data" + getmyrides);
+
+
     return (
 
       <div className="App">
-        <Navigation  onRouteChange={this.onRouteChange} />
         {route === 'Profile'
-          ? <div>
-            <Profile />
+          ? <Profile onRouteChange={this.onRouteChange} />
 
 
-          </div>
           : (route === 'Login' ?
-            <Login onRouteChange={this.onRouteChange} />
+            <div>
+              <Navigation onRouteChange={this.onRouteChange} />
+              <Login onRouteChange={this.onRouteChange} onSubmit={this.onSubmit} />
+
+            </div>
 
             : (route === 'Register' ?
-              <Register onRouteChange={this.onRouteChange} />
+              <div>
+                <Navigation onRouteChange={this.onRouteChange} />
+                <Register onRouteChange={this.onRouteChange} />
+              </div>
 
               : (route === 'AboutUs' ?
-                < AboutUs onRouteChange={this.onRouteChange} />
+                <div>
+                  <Navigation onRouteChange={this.onRouteChange} />
+                  < AboutUs onRouteChange={this.onRouteChange} />
+                </div>
 
                 : (route === 'ContactUs' ?
-                  < ContactUs onRouteChange={this.onRouteChange} />
+                  <div>
+                    <Navigation onRouteChange={this.onRouteChange} />
+                    < ContactUs onRouteChange={this.onRouteChange} />
+                  </div>
 
                   : (route === 'SearchedRides' ?
-                  < RideList   fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength} 
-                   
-                  onRouteChange = {this.onRouteChange} onRequestRide={this.onRequestRide}   />
-
-                  : (route === 'home',
                     <div>
-                      <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch}
-                     />
+                      <Profile onRouteChange={this.onRouteChange} />
+                      < RideList fetchedRides={fetchedRides} 
+                        onRouteChange={this.onRouteChange} onRequestRide={this.onRequestRide} />
                     </div>
 
+                    : (route === 'Search' ?
+                      <div>
+                        <Profile onRouteChange={this.onRouteChange} />
+                        <Search onRouteChange={this.onRouteChange} onSubmitSearch={this.onSubmitSearch} />
+                      </div>
 
-                  )
+
+                      : (route === 'MyProfile' ?
+                        <div>
+                          <Profile onRouteChange={this.onRouteChange} />
+                          <ProfileFetch profiles={profiles} />
+                        </div>
+
+                        : (route === 'Rides' ?
+                          <div>
+                            <Profile onRouteChange={this.onRouteChange} />
+
+                            < Rides onRouteChange={this.onRouteChange} onFetchRequestedRides={this.onFetchRequestedRides} />
+                          </div>
+
+                          : (route === 'FetchedRequestedRides' ?
+                            <div>
+
+                              <Profile onRouteChange={this.onRouteChange} />
+                              < RideRequestsList fetchr equestrides={fetchrequestrides} onRouteChange={this.onRouteChange}
+                               onAcceptedRides={this.onAcceptedRides} onRejectedRides={this.onRejectedRides} />
+                            </div>
+
+
+                            : (route === 'AddRides' ?
+                              <div>
+                                <Profile onRouteChange={this.onRouteChange} />
+                                 {/* <Rides onRouteChange={this.onRouteChange}></Rides> */}
+                                <AddRides  onSubmitCreate={this.onSubmitCreate}  />
+                              </div>
+
+                            
+
+
+
+                              : (route === 'AcceptedMyRides' ?
+                                <div>
+
+                                  <Profile onRouteChange={this.onRouteChange} />
+                                  < MyRidesList getmyrides={getmyrides} onRouteChange={this.onRouteChange} />
+                                </div>
+
+                                : (route === 'home',
+                                  <div>
+                                    <Navigation onRouteChange={this.onRouteChange} />
+                                  </div>
+
+
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
                   )
                 )
               )
             )
-          )
-
+            )
+          
         }
 
 
@@ -178,10 +450,13 @@ class App extends Component {
             <source src={sample} type='video/mp4' />
 
           </video>
+          <div className="text pt6">
+          <div class=" nav-item nav-link black active  f3 fw4 ph0 mh0 pa0">CARPPOOL <br />OF  <br />DIGITAL <br />AGE</div>
+          </div>
         </div>
 
         <footer className="pv4 ph3 ph5-ns tc">
-          <a className="link dim gray dib h2 w2 br-100 mr3 " href="https://www.facebook.com/" title="">
+          <a className="link dim gray dib h2 w2 br-100 mr3 mt6 pt5" href="https://www.facebook.com/" title="">
             <svg data-icon="facebook" viewBox="0 0 32 32" >
               <title>facebook icon</title>
               <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"></path>
@@ -200,10 +475,10 @@ class App extends Component {
             </svg>
           </a>
           <div className="mt4">
-            <a href="#" className="f6 link dim gray dib mr3 mr4-ns">Help</a>
-            <a href="#" className="f6 link dim gray dib mr3 mr4-ns">Send feedback</a>
-            <a href="#" className="f6 link dim gray dib mr3 mr4-ns">Privacy</a>
-            <a href="#" className="f6 link dim gray dib">Terms</a>
+            <p className="f6 link dim gray dib mr3  mr4-ns">Help</p>
+            <p className="f6 link dim gray dib mr3 mr4-ns">Send feedback</p>
+            <p className="f6 link dim gray dib mr3  mr4-ns">Privacy</p>
+            <p className="f6 link dim gray dib ">Terms</p>
           </div>
         </footer>
       </div>

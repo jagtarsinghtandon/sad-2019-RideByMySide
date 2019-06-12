@@ -1,59 +1,49 @@
 const express = require("express")
 const register = express.Router()
-const bcrypt= require("bcrypt")
+const person = require("../models/Person")
+var con = require("../bin/connection");
 
 
 
-
-register.post('/register',(req,res)=>{
-
-    let hash = bcrypt.hashSync('req.body.password', 8);
-    // bcrypt.hash(password, salt, function(err, hash) {
-    //     query = "insert query with generated crypt password";
-    //     pool.query(query, (err, res) => {
-    //         console.log(err, res);
-    //     })
-    // });
-       
-
-var mysql = req.app.get('mysql');
-
-const  first_name =  req.body.first_name;
-const password = hash;
-const last_name = req.body.last_name;
-const email = req.body.email;
+register.post('/register', (req, res) => {
 
 
 
+    const im_firstname = req.body.first_name;
+    const im_password = req.body.password;
+    const im_lastname = req.body.last_name;
+    const im_email = req.body.email;
 
-    const emailCheckQuery="SELECT EMAIL FROM person WHERE EMAIL= ?;";
-    const filter2 = [email];
-    console.log(this.state);
-       mysql.query(emailCheckQuery, filter2, (err, rows, fields)=>{
-
-
-      if (rows.length ==1){
-    console.log("email existssssss");
-        res.status(500).json({registers:rows})
+    const err = (err) => {
+        console.error("Error: ", err);
     }
-    
- else
-    {
-        const queryString = "INSERT INTO person (FIRST_NAME,LAST_NAME,EMAIL,PASSWORD) VALUES (?,?,?,?)"
-        const filter = [first_name,last_name, email,password];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
-           
-            
-        if (!err){
-            res.json({registers:rows})
-        }
-        else
-        console.log('  data is not showing \n ERROR :' + err);
-})
-    }
-       })
-    
+
+
+
+    person.create({ FIRST_NAME: im_firstname, LAST_NAME: im_lastname, EMAIL: im_email, PASSWORD: im_password })
+        .then(function (data) {
+            res.json({ registers: data.get({ plain: true }) })
+            console.log(data.get({
+                plain: true
+            }))
+            var row = data.get({ plain: true });
+            console.log(row.id);
+
+        })
+
+        .catch(err)
+        .finally(() => {
+            con.close();
+            console.log('connection closed');
+        });
+
+
+
+
+
+
+
+
 });
 
 
