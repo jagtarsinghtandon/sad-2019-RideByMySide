@@ -10,12 +10,12 @@ profile.post('/profile', verifyToken, (req, res) => {
         if (err) {
             res.sendStatus(403);
         } else {
-            const im_email = req.body.email;
-            const im_password = req.body.password;
+            const im_email = req.body.Email;
+            const im_password = req.body.Password;
 
             person.findOne({ where: { EMAIL: im_email, PASSWORD: im_password } })
                 .then(function (data) {
-                    res.json({ searchprofile: data.get({ plain: true }) })
+                    res.json({ profile: data.get({ plain: true }) })
                     console.log(data.get({
                         plain: true
                     }))

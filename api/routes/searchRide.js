@@ -1,6 +1,5 @@
 var express = require("express");
 var searchRide = express.Router();
-//const cors = require("cors")
 const ride = require("../models/Rides")
 const person = require("../models/Person")
 const jwt = require("jsonwebtoken")
@@ -9,7 +8,7 @@ var Sequelize = require("sequelize")
 person.hasMany(ride, { foreignKey: 'person_PERSON_ID' });
 ride.belongsTo(person, { foreignKey: 'person_PERSON_ID' });
 
-searchRide.get('/search', verifyToken, (req, res) => {
+searchRide.post('/search', verifyToken, (req, res) => {
 
   jwt.verify(req.token, 'secretkey', (err, authData) => {
     if (err) {
@@ -21,7 +20,6 @@ searchRide.get('/search', verifyToken, (req, res) => {
 
       const date_of_travel = req.body.Date_Of_Travel;
 
-      const hobbies = req.body.Hobbies;
       ride.findAll({
         where: {
           [Sequelize.Op.or]: {
@@ -35,7 +33,6 @@ searchRide.get('/search', verifyToken, (req, res) => {
         }]
       })
         .then(function (search) {
-          //var row = search.get({ plain: true });
           res.json({ searchedride: search })
 
         });
@@ -62,4 +59,3 @@ function verifyToken(req, res, next) {
 }
 
 module.exports = searchRide
-

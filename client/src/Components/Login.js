@@ -9,8 +9,6 @@ class Login extends Component {
       logins: []
 
     }
-    // this.onChange = this.onChange.bind(this)
-    // this.onSubmit = this.onSubmit.bind(this)
 
   }
 
@@ -22,37 +20,6 @@ class Login extends Component {
     this.setState({ password: event.target.value })
   }
 
-
-  // onChange (e) {
-  //     this.setState({ [e.target.name]: e.target.value })
-  // }
-
-  //   onSubmit (event) {
-  //       event.preventDefault();
-  //       fetch('http://localhost:9000/login', {
-  //         method: 'POST',
-  //         headers: {'Content-Type': 'application/json'},
-  //         body: JSON.stringify({
-  //           email: this.state.email,
-  //           password: this.state.password
-  //       })
-  //     })
-
-
-
-  //   .then((response) => {
-  //     response.json()
-  //     if(response.status === 500)
-  //     alert("invalid email or password")
-  //     else
-  //     {
-  //         this.setState({ logins: response.logins},console.log('success'))
-  //         alert('Successfully logged in')
-  //             this.props.onRouteChange('Profile')
-  //     }
-  // })
-
-  //   }
 
 
   render() {
@@ -106,7 +73,6 @@ class Login extends Component {
 
             <div className="">
               <input
-                // onClick={this.onSubmit}
                 onClick={() => onSubmit(email, password)}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"

@@ -14,11 +14,9 @@ var updateprofileRouter = require("./routes/updateprofile");
 var createRideRouter = require("./routes/createRide");
 var acceptRideRouter = require("./routes/acceptRide");
 var checkRequestRideRouter = require("./routes/checkRequestRide");
-var fetchRequestRidesRouter = require("./routes/fetchRequestRides");
-var requestRideRouter = require("./routes/requestRide");
-var displayRideRequestsRouter = require("./routes/displayRideRequests");
-//var createRideRouter = require("./routes/createRide");
-
+var createRideRouter = require("./routes/createRide");
+var fetchrequestedrideRouter = require("./routes/fetchrequestedrides");
+var requestedrideRouter = require("./routes/requestedride");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 
@@ -39,26 +37,22 @@ app.use(function(req, res, next) {
 app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
-app.use(searchRideRouter);
 app.use(updateprofileRouter);
-  app.use(createRideRouter);
-  app.use(acceptRideRouter);
-  app.use(requestRideRouter);
-  app.use(fetchRequestRidesRouter);
-  app.use(checkRequestRideRouter);
-  app.use(displayRideRequestsRouter);
+app.use(searchRideRouter);
+app.use(createRideRouter);
+app.use(acceptRideRouter);
+app.use(requestedrideRouter);
+app.use(checkRequestRideRouter);
+app.use(fetchrequestedrideRouter);
 
-// catch 404 and forward to error handler
 
- //catch 404 and forward to error handler
-app.use(function(req, res, next)
- {
+//catch 404 and forward to error handler
+app.use(function (req, res, next) {
   next(createError(404));
  });
 
 // error handler
-app.use(function(err, req, res, next) 
-{
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
