@@ -50,7 +50,7 @@ class App extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
       
-          Logged_In_Person_Id : "9",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
+          Logged_In_Person_Id : "36",   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
           Ride_Id : ride_id
         })
   })
@@ -75,7 +75,7 @@ class App extends Component {
           Ride_Id : ride_id,
           Person_Id : person_id ,    
           Ride_Id : ride_id,
-          Requested_Person_Id : "9"
+          Requested_Person_Id : "36"
          
         
       })
