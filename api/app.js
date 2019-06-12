@@ -6,16 +6,15 @@ var logger = require('morgan');
 var cors = require("cors");
 var app = express();
 var bodyparser = require("body-parser");
-var mysql = require('mysql');
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var profileRouter = require("./routes/profile");
 var searchRideRouter = require("./routes/searchRide");
-var requestedrideRouter= require("./routes/requestedride");
+var createRideRouter = require("./routes/createRide");
+var acceptRideRouter = require("./routes/acceptRide");
 var checkRequestRideRouter = require("./routes/checkRequestRide");
-var acceptedridesRouter = require("./routes/acceptedrides");
-var checkacceptedridesRouter = require("./routes/checkacceptedrides");
 var fetchrequestedrideRouter = require("./routes/fetchrequestedrides");
+var requestedrideRouter = require("./routes/requestedride");
 
 app.use(bodyparser.urlencoded({ extended: false }));
 
@@ -36,20 +35,20 @@ app.use(loginRouter);
 app.use(registerRouter);
 app.use(profileRouter);
 app.use(searchRideRouter);
+app.use(createRideRouter);
+app.use(acceptRideRouter);
 app.use(requestedrideRouter);
 app.use(checkRequestRideRouter);
-app.use(acceptedridesRouter);
-app.use(checkacceptedridesRouter);
 app.use(fetchrequestedrideRouter);
 
 
- //catch 404 and forward to error handler
-app.use(function(req, res, next) {
+//catch 404 and forward to error handler
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -59,24 +58,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-///Create Connection to MySql
-
-const db = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'password',
-  database : 'ridebymysidedb',
-  insecureAuth : true
-});
-
-// Connect
-db.connect((err) => {
-    if(err){
-        throw err;
-    }
-    console.log('MySql Connected...');
-    app.set('mysql',db)
-});
 
 
 

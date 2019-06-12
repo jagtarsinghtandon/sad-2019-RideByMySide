@@ -1,33 +1,21 @@
 var express = require("express");
 var router = express.Router();
-const cors = require("cors")
-
-router.use(cors())
+const rideRequest = require("../models/RideRequest")
 
 router.post('/fetchrequestedrides', (req, res) => {
-    console.log("search rides")
+  console.log("search rides")
+  console.log(req.body.Person_Id)
+  
+  const person_id = req.body.Person_Id;
 
-    const person_id =  req.body.Person_Id;
-    
-    
 
-    var mysql = req.app.get('mysql');
 
-        var queryString = " SELECT * FROM riderequests WHERE PERSON_ID= ?;"
-        
-      var filter = [person_id];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
-          
-            
-        if (!err){
-            res.json({fetchrequestrides:rows})
-            
+  rideRequest.findAll({ where: { PERSON_ID:person_id } })
+  .then(function (requests) {
+    res.json({ fetchrequestrides: requests })
 
-        }
-        else
-        console.log(' ride data is not showing \n ERROR :' + err);
-})
+  });
+
 });
 
 

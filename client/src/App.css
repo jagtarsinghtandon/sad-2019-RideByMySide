@@ -10,10 +10,18 @@
     
   }
 
+  .top-left {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+  }
+
   li{
     padding: 20px;
   }
-
+.text{
+  margin-right: 1200px;
+}
   .pull{
     margin-left: 80px
   }

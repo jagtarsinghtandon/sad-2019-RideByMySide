@@ -35,11 +35,12 @@ class App extends Component {
       date_of_travel: '',
       hobbies: '',
       fetchedRides: [],
+      token: '',
       fetchrequestrides: [],
       img: '',
       imgstring: '', name: '', destination: '', person_id: '', ride_id: '',
-      logged_in_person_id: '',
-      logged_in_first_name: '',
+      //  logged_in_person_id: '',
+      // logged_in_first_name: '',
       getmyrides: []
     };
 
@@ -51,50 +52,55 @@ class App extends Component {
     this.setState({ route: route });
   }
 
-  onAcceptedRides = (imgstring, source, destination, date_of_travel, hobbies, person_id, ride_id) => {
-    console.log("yeh kiya request accept" + source, destination, date_of_travel, hobbies, person_id, ride_id)
+  onAcceptedRides = (source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id ) => {
+    console.log("yeh kiya request accept" + source,ride_accepted, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
 
-    fetch('http://localhost:9000/checkacceptride', {
-      method: 'post',
+console.log("yeh kiya request accept" +  person_id, ride_id)
+    
+
+    fetch('http://localhost:9000/acceptride', {
+      method: 'put',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        First_Name: this.state.logged_in_first_name,
+        Requested_Person_Id: this.state.logged_in_person_id,
         Person_Id: person_id,
         Ride_Id: ride_id,
-        Requested_Person_Id: this.state.logged_in_person_id
+        Ride_Status: ride_accepted
+        
       })
     })
 
-      .then((response) => {
-        response.json()
-        if (response.status === 200)
-          alert("Ride already accepted")
-        else {
+      .then(response => response.json())
+      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
 
-          fetch('http://localhost:9000/acceptride', {
-            method: 'put',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              Imgstring: imgstring,
-              First_Name: this.state.logged_in_first_name,
-              Source: source,
-              Destination: destination,
-              Date_Of_Travel: date_of_travel,
-              Hobbies: hobbies,
-              Ride_Id: ride_id,
-              Requested_Person_Id: this.state.logged_in_person_id,
-              Person_Id: person_id,
-              Ride_Id: ride_id
+      alert('You have accepted the ride!!')
 
-            })
-          })
+  }
 
-            .then(response => response.json())
-            .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+  onRejectedRides = (source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id) => {
+    console.log("yeh kiya request accept" + source,ride_rejected, destination, date_of_travel, image, first_name, hobbies, person_id, ride_id)
 
-          this.setState({ route: "AcceptedMyRides" });
-        }
+console.log("yeh kiya request accept" +  person_id, ride_id)
+    
+
+    fetch('http://localhost:9000/acceptride', {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        First_Name: this.state.logged_in_first_name,
+        Requested_Person_Id: this.state.logged_in_person_id,
+        Person_Id: person_id,
+        Ride_Id: ride_id,
+        Ride_Status: ride_rejected
+        
       })
+    })
 
+      .then(response => response.json())
+      .then(ridedata => this.setState({ getmyrides: ridedata.acceptride }))
+
+      alert('You have rejected the ride!!')
 
   }
 
@@ -128,7 +134,10 @@ class App extends Component {
 
     fetch('http://localhost:9000/checkrequestride', {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+      },
       body: JSON.stringify({
 
         Logged_In_Person_Id: this.state.logged_in_person_id,   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
@@ -142,9 +151,12 @@ class App extends Component {
           alert("Ride already requested")
         else {
 
-          fetch('http://localhost:9000/requestride', {
+          fetch('http://localhost:9000/requestRide', {
             method: 'post',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': "Bearer " + this.state.tokens
+            },
             body: JSON.stringify({
               Imgstring: imgstring,
               First_Name: this.state.logged_in_first_name,
@@ -154,7 +166,7 @@ class App extends Component {
               Hobbies: hobbies,
               Ride_Id: ride_id,
               Person_Id: person_id,
-              Ride_Id: ride_id,
+              // Ride_Id: ride_id,
               Requested_Person_Id: this.state.logged_in_person_id
 
 
@@ -162,7 +174,7 @@ class App extends Component {
           })
 
             .then(response => response.json())
-            .then(rideRequestdata => this.setState({ rideRequested: rideRequestdata.rideRequested }))
+            .then(rideRequestdata => this.setState({ rideRequested: rideRequestdata.riderequest }))
 
           alert('Congratulations, your ride has been Requested')
         }
@@ -186,35 +198,56 @@ class App extends Component {
 
       .then((response) => {
         response.json()
-        if (response.status === 500)
-          alert("invalid email or password")
-        else {
-          this.setState({ logins: response.logins }, console.log('success'))
-          alert('Successfully logged in')
+          .then((logindata) => {
+            let token = logindata.token
+            this.setState({ tokens: token })
 
-          fetch('http://localhost:9000/profile', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              Email: email,
-            })
+            console.log(token)
+            if (response.status === 500)
+              alert("invalid email or password")
+            else {
+              this.setState({ logins: response.logins }, console.log('success'))
+              // this.setState({ logged_in_person_id: id })
+
+              alert('Successfully logged in')
+
+              fetch('http://localhost:9000/profile', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': "Bearer " + token
+                },
+                body: JSON.stringify({
+                  Email: email,
+                  Password: password
+
+                })
+              })
+                .then(response => response.json())
+                .then((profiledata) => {
+
+                  let name = profiledata.profile.FIRST_NAME
+                  this.setState({ logged_in_first_name: name })
+                  let id = profiledata.profile.PERSON_ID
+                  this.setState({ logged_in_person_id: id })
+
+                  this.setState({ profiles: profiledata.profile }, console.log("in submit"))
+
+
+
+
+
+                  // this.setState({ tokens: token })
+                  // this.setState({ logged_in_first_name: profiledata.FIRST_NAME })
+                  // this.setState({ logged_in_person_id: profiledata.PERSON_ID })
+
+                });
+
+              this.setState({ route: "Profile" });
+
+            }
+
           })
-            .then(response => response.json())
-            .then((profiledata) => {
-
-              let id = profiledata.profile.map(profile => { return profile.PERSON_ID })
-              this.setState({ logged_in_person_id: id })
-              let name = profiledata.profile.map(profile => { return profile.FIRST_NAME })
-              this.setState({ logged_in_first_name: name })
-
-
-              this.setState({ profiles: profiledata.profile }, console.log("in submit"))
-            });
-
-          this.setState({ route: "Profile" });
-
-        }
-
       })
 
   }
@@ -225,24 +258,27 @@ class App extends Component {
 
 
 
-  onSubmitSearch = (source, dest, date_of_travel, hobbies) => {
+  onSubmitSearch = (source, dest, date_of_travel, hobbies, tokens) => {
     console.log("in submit" + source + dest + date_of_travel + hobbies)
 
 
     fetch('http://localhost:9000/search', {
       method: 'post',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': "Bearer " + this.state.tokens
+      },
       body: JSON.stringify({
         Source: source,
         Destination: dest,
-        Date_Of_Travel: date_of_travel,
-        Hobbies: hobbies
+        Date_Of_Travel: date_of_travel
 
       })
     })
 
       .then(response => response.json())
-      .then(ridedata => this.setState({ fetchedRides: ridedata.rides }))
+      .then(ridedata =>
+        this.setState({ fetchedRides: ridedata.searchedride }))
 
     this.setState({ route: "SearchedRides" });
 
@@ -250,14 +286,21 @@ class App extends Component {
   }
 
   render() {
-    const { route, fetchedRides, getmyrides, img, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
+    const { route, fetchedRides, getmyrides, tokens, profiles, imgstring, imageStr, rideRequested, fetchrequestrides, logged_in_person_id, logged_in_first_name } = this.state;
+    // var fetchedRidesLength = fetchedRides.length;
 
-    console.log("length dekh" + fetchedRides.fetchedRides);
-    console.log("length dekh" + fetchedRides.length);
-    console.log("photo" + img);
+
+
+    // const logged_in_first_name =  profiles.FIRST_NAME
+
+    // const logged_in_person_id =  profiles.PERSON_ID
+    // console.log("length dekh" + fetchedRides.fetchedRides);
+    // console.log("length dekh" + fetchedRides.length);
+    console.log("photo" + tokens);
 
     console.log("profilessss" + logged_in_person_id + logged_in_first_name);
 
+    console.log("vg43g5g5g35g" + profiles.FIRST_NAME)
     console.log("photo" + imgstring + "cccc" + imageStr);
 
     console.log("yeh dal gaya ride request table mein" + rideRequested);
@@ -265,11 +308,6 @@ class App extends Component {
     console.log("yeh kiya fetch data" + fetchrequestrides);
     console.log("yeh deekha fetch data" + getmyrides);
 
-    console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJ" + logged_in_person_id + logged_in_first_name)
-
-
-
-    var fetchedRidesLength = fetchedRides.length;
 
     return (
 
@@ -306,7 +344,7 @@ class App extends Component {
                   : (route === 'SearchedRides' ?
                     <div>
                       <Profile onRouteChange={this.onRouteChange} />
-                      < RideList fetchedRides={fetchedRides} fetchedRidesLength={fetchedRidesLength}
+                      < RideList fetchedRides={fetchedRides} 
                         onRouteChange={this.onRouteChange} onRequestRide={this.onRequestRide} />
                     </div>
 
@@ -334,7 +372,8 @@ class App extends Component {
                             <div>
 
                               <Profile onRouteChange={this.onRouteChange} />
-                              < RideRequestsList fetchrequestrides={fetchrequestrides} onRouteChange={this.onRouteChange} onAcceptedRides={this.onAcceptedRides} />
+                              < RideRequestsList fetchrequestrides={fetchrequestrides} onRouteChange={this.onRouteChange}
+                               onAcceptedRides={this.onAcceptedRides} onRejectedRides={this.onRejectedRides} />
                             </div>
 
 
@@ -371,7 +410,6 @@ class App extends Component {
             )
 
           )
-
         }
 
 
@@ -382,10 +420,13 @@ class App extends Component {
             <source src={sample} type='video/mp4' />
 
           </video>
+          <div className="text pt6">
+          <div class=" nav-item nav-link black active  f3 fw4 ph0 mh0 pa0">CARPPOOL <br />OF  <br />DIGITAL <br />AGE</div>
+          </div>
         </div>
 
         <footer className="pv4 ph3 ph5-ns tc">
-          <a className="link dim gray dib h2 w2 br-100 mr3 mt6 pt7" href="https://www.facebook.com/" title="">
+          <a className="link dim gray dib h2 w2 br-100 mr3 mt6 pt5" href="https://www.facebook.com/" title="">
             <svg data-icon="facebook" viewBox="0 0 32 32" >
               <title>facebook icon</title>
               <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"></path>
