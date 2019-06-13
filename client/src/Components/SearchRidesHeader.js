@@ -22,7 +22,6 @@ const SearchedRidesHeader = ({ length }) => {
                         <th className="fw0 pr0 ma0  bg-white ">Source</th>
                         <th className="fw0 pr0 ma3 bg-white ">Destintation</th>
                         <th className="fw0 tl pr0 ma3 bg-white ">Date/Time of Travel  &  Hobbies</th>
-                        {/* <th className="fw0 tl pr0 ma3 bg-white ">Hobbies</th> */}
                         <th className="fw0 tl pa3 bg-white right">       </th>
 
                     </tr>

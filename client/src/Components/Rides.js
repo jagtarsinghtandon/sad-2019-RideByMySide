@@ -6,8 +6,20 @@ import React from 'react';
 const Rides = ({ onRouteChange, onFetchRequestedRides, onSubmitMyRides,onSubmitAcceptedRejected }) => {
 
     return (
-        <div className="pack pt5">
+        <div className="pack pt5 center">
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+
+
+            <div >
+                    <input
+                        onClick={() => onRouteChange('AddRides')}
+                        className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
+                        type="submit"
+                        value="Add a Ride"
+                    />
+                </div>
+
+
 
                 <div >
                     <input
@@ -28,14 +40,7 @@ const Rides = ({ onRouteChange, onFetchRequestedRides, onSubmitMyRides,onSubmitA
                     />
                 </div>
 
-                <div >
-                    <input
-                        onClick={() => onRouteChange('AddRides')}
-                        className="btn ph3 pv2 ba b--black bg-green grow pull pointer f6 dib"
-                        type="submit"
-                        value="Add a Ride"
-                    />
-                </div>
+                
 
                 <div >
                     <input

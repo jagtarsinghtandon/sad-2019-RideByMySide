@@ -31,13 +31,15 @@ class AddRides extends Component {
 
 
     render() {
-        const { source, destination, date, onRouteChange } = this.state;
+        const { source, destination, date } = this.state;
 
 
         const { onSubmitCreate } = this.props;
 
         return (
-            <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
+
+        
+            <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 center">
                 <main className="pa4 black-80">
                     <div className="measure">
                         <fieldset id="Add Ride" className="ba b--transparent ph0 mh0">
@@ -99,6 +101,7 @@ class AddRides extends Component {
                     </div>
                 </main>
             </article>
+            
         )
     }
 }

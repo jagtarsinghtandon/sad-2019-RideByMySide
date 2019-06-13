@@ -9,11 +9,14 @@ createRide.post('/createRide', verifyToken, (req, res) => {
         if (err) {
             res.sendStatus(403);
         } else {
-            const im_source = req.body.source;
-            const im_destination = req.body.destination;
-            const im_id = req.body.id;
+            const im_source = req.body.Source;
+            const im_destination = req.body.Destination;
+            const im_id = req.body.Person_Id;
+            const im_date = req.body.Date;
+            
+            console.log(req.body.Source)
 
-            ride.create({ SOURCE: im_source, DESTINATION: im_destination, PERSON_ID: im_id })
+            ride.create({ SOURCE: im_source, DESTINATION: im_destination, person_PERSON_ID: im_id, DATE_TIME_OF_RIDE: im_date})
                 .then(function (data) {
                     res.json({
                         createdride: data.get({ plain: true }),

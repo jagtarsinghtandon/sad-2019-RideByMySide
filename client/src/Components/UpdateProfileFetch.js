@@ -4,36 +4,34 @@ import UpdateProfile from './UpdateProfile';
 
 
 
-const UpdateProfileFetch = ({ profiles, onSubmitUpdate, onRouteChnage}) => {
-    return (
-      
-      <div >
-        {
-          profiles.map((file, i) => {
-            return (
-              // <UpdateProfile
-                
-              //   first_name={profiles[i].FIRST_NAME}
-              //   last_name={profiles[i].LAST_NAME}
-              //   email={profiles[i].EMAIL}
-              //   dob={profiles[i].DOB}
-              //   mobileno={profiles[i].CONTACT_NO}
-              //   hobbies={profiles[i].HOBBIES}
-              //   image={profiles[i].IMAGE.data}
+const UpdateProfileFetch = ({ profiles, onSubmitUpdate, profiles_first }) => {
+  return (
 
-              //   onSubmitUpdate={onSubmitUpdate}
-              //   onRouteChnage={onRouteChnage}
-               
-              //   />  
-                
-                        
-            );
-          })
-          
-        }
-      </div>
-      
-    );
-  }
-  
-  export default UpdateProfileFetch;
+    <div >
+      {
+
+        <UpdateProfile
+
+          first_name={profiles.FIRST_NAME}
+          last_name={profiles.LAST_NAME}
+          email={profiles.EMAIL}
+          dob={profiles.DOB}
+          mobileno={profiles.CONTACT_NO}
+          hobbies={profiles.HOBBIES}
+          image={profiles.IMAGE.data}
+
+          onSubmitUpdate={onSubmitUpdate}
+          profiles_first={profiles_first}
+
+        />
+
+
+
+
+      }
+    </div>
+
+  );
+}
+
+export default UpdateProfileFetch;

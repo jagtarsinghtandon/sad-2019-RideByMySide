@@ -2,7 +2,7 @@ const express = require("express")
 const updateprofile = express.Router()
 const person = require("../models/Person")
 
-updateprofile.get('/updateprofile',(req,res)=>{
+updateprofile.post('/updateprofile',(req,res)=>{
 
     // var mysql = req.app.get('mysql');
 

@@ -39,7 +39,7 @@
   .pack{
     list-style: none;
    display: flex;
-   margin-left: 500px;
+   margin-left: 300px;
   }
 
  .main-nav{
@@ -85,8 +85,3 @@ h4 {
   margin: 2rem 0rem 1rem;
 }
 
-/* .table-image {
-  td, th {
-    vertical-align: middle;
-  }
-} */

@@ -26,14 +26,7 @@ router.post('/requestRide', verifyToken, (req, res) => {
             const ride_status = "Requested";
             const requested_person_id = req.body.Requested_Person_Id;
 
-            // person.findOne({
-            //     attributes: ['IMAGE'], where: { PERSON_ID: requested_person_id }
-            // })
-            //     .then(function (image) {
-            //         imgstring = image.IMAGE;
-
-            //         console.log(imgstring);
-            //     })
+           
 
             requestRide.create({
                 PERSON_ID: person_id, SOURCE: source, DESTINATION: destination, DATE_TIME_OF_RIDE: date_of_travel, HOBBIES: hobbies,

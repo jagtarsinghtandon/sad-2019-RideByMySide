@@ -48,7 +48,7 @@ const RideRequestsBody = ({ source, destination, date_of_travel, image, first_na
                                     onClick={() => onAcceptedRides(source, destination, ride_accepted, date_of_travel, imgstring, first_name, hobbies, person_id, ride_id, requested_person_id)}
                                 />
                                 <input
-                                    className="btn bg-red  pull pointer "
+                                    className="btn bg-red grow pull pointer "
                                     value="Reject"
                                     type="submit"
                                     onClick={() => onRejectedRides(source, destination, ride_rejected, date_of_travel, imgstring, first_name, hobbies, person_id, ride_id, requested_person_id)}
