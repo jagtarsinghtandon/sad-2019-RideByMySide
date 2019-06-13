@@ -1,33 +1,61 @@
 var express = require("express");
-var router = express.Router();
-const cors = require("cors")
+var searchRide = express.Router();
+const ride = require("../models/Rides")
+const person = require("../models/Person")
+const jwt = require("jsonwebtoken")
+var Sequelize = require("sequelize")
 
-router.use(cors())
+person.hasMany(ride, { foreignKey: 'person_PERSON_ID' });
+ride.belongsTo(person, { foreignKey: 'person_PERSON_ID' });
 
-router.post('/search', (req, res) => {
-    
-    const source =  req.body.Source;
-    const destination = req.body.Destination;
+searchRide.post('/search', verifyToken, (req, res) => {
 
+  jwt.verify(req.token, 'secretkey', (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
 
-    var mysql = req.app.get('mysql');
+      const im_source = req.body.Source;
+      const im_destination = req.body.Destination;
 
-        var queryString = "SELECT SOURCE, DESTINATION,DATE_TIME_OF_RIDE FROM ride WHERE SOURCE= ? AND DESTINATION= ?;"
-        var filter = [source, destination];
-        console.log(this.state);
-        mysql.query(queryString, filter, (err, rows, fields)=>{
-          
-            
-        if (!err){
-            res.json({rides:rows})
+      const date_of_travel = req.body.Date_Of_Travel;
 
-        }
-        else
-        console.log(' ride data is not showing \n ERROR :' + err);
-})
+      ride.findAll({
+        where: {
+          [Sequelize.Op.or]: {
+            SOURCE: { [Sequelize.Op.or]: { [Sequelize.Op.eq]: im_source } },
+            DESTINATION: { [Sequelize.Op.or]: { [Sequelize.Op.eq]: im_destination } },
+            DATE_TIME_OF_RIDE: { [Sequelize.Op.or]: { [Sequelize.Op.eq]: date_of_travel } }
+          }
+        },
+        include: [{
+          model: person, attributes: ['FIRST_NAME', 'IMAGE', 'HOBBIES']
+        }]
+      })
+        .then(function (search) {
+          res.json({ searchedride: search })
+
+        });
+
+    }
+  });
+
 });
 
+function verifyToken(req, res, next) {
 
+  const bearerHeader = req.headers['authorization'];
 
-module.exports = router
+  if (typeof bearerHeader != 'undefined') {
 
+    const bearer = bearerHeader.split(' ');
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+
+    res.sendStatus(403);
+  }
+}
+
+module.exports = searchRide
