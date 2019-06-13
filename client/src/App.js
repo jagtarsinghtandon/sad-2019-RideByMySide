@@ -111,7 +111,7 @@ class App extends Component {
           alert("Something went wrong")
         else {
           this.setState({ updateprofiles: response.updateprofile }, console.log('success'))
-
+          alert('Changes Updated successfully!')
         }
       })
 
@@ -174,7 +174,7 @@ class App extends Component {
   onFetchRequestedRides = () => {
 
     fetch('http://localhost:9000/fetchrequestedrides', {
-      method: 'get',
+      method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         Person_Id: this.state.logged_in_person_id
