@@ -33,7 +33,7 @@ class Login extends Component {
     console.log(logins);
 
     return (
-      <article className="br3 ba bg-white b--black-10 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
+      <article className="br3 ba bg-white b--gray-20 mv4 w-0 w-50-m w-25-l mw6 shadow-5 mr3 push">
         <main className="pa4 black-80">
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">

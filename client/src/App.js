@@ -194,13 +194,15 @@ class App extends Component {
 
   onSubmitMyRides = () => {
 
-    fetch('http://localhost:9000/displaymyrides', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        Person_Id: this.state.logged_in_person_id
-
-      })
+    const data = this.state.logged_in_person_id;
+    console.log("check"+data);
+    fetch(`http://localhost:9000/displaymyrides/${data}`, {
+      method: 'get',
+      headers: { 'Content-Type': 'application/json' }
+      // body: JSON.stringify({
+      //   Person_Id: this.state.logged_in_person_id
+        
+      // })
     })
 
       .then(response => response.json())
@@ -556,9 +558,7 @@ class App extends Component {
             <source src={sample} type='video/mp4' />
 
           </video>
-          <div className="text pt6">
-            <div className=" nav-item nav-link black active  f3 fw4 ph0 mh0 pa0">CARPPOOL <br />OF  <br />DIGITAL <br />AGE</div>
-          </div>
+         
         </div>
 
         <footer className="pv4 ph3 ph5-ns tc">

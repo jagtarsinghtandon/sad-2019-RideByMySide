@@ -16,6 +16,7 @@ const MyProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image,
     imgstring.push(base64Flag + imageStr)
 
         return(
+            
             <div class="container emp-profile">
             <form method="post">
                 <div class="row">
@@ -26,15 +27,15 @@ const MyProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image,
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="profile-head">
+                        <div class="profile-head black">
                                     <h5>
-                                        {first_name + last_name}
+                                        {first_name + " " +  last_name}
                                     </h5>
                                     <h6>
                                         {email}
                                     </h6>
                                     <h7>
-                                       Intrested in: {hobbies}
+                                       Interested in: {hobbies}
                                      </h7>  
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item">
@@ -44,16 +45,7 @@ const MyProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image,
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                    <input 
-                            
-                            onClick={() =>  onRouteChange('UpdateProfile')}
-
-                            className="b ma3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                            type="submit"
-                            value="Update Profile"
-                        />
-                    </div>
+                   
                 </div>
                 <div class="row">
                     <div class="col-md-4">
@@ -61,18 +53,11 @@ const MyProfile = ({first_name, last_name, email, dob, mobileno, hobbies, image,
                     </div>
                     <div class="col-md-8">
                         <div class="tab-content profile-tab" id="myTabContent">
-                            <div class="tab-pane fade show active b--red" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-pane fade show active white" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                       
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
+                                                <label >Name</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p>{first_name}</p>
