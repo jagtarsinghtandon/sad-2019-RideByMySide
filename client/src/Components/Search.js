@@ -13,8 +13,6 @@ class Search extends Component {
         }
 
 
-        // this.onChange = this.onRouteChange.bind(this)
-        // this.onSubmit = this.onSubmit.bind(this)s
 
     }
 

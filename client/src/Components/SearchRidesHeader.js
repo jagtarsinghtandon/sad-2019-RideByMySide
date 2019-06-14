@@ -17,13 +17,14 @@ const SearchedRidesHeader = ({ length }) => {
                 <thead>
                     <tr className="stripe-dark">
 
-                        <th className="fw0 tl pr0 ma0 bg-white ">Profile Picture</th>
-                        <th className="fw0  bg-white ">Name</th>
-                        <th className="fw0 pr0 ma0  bg-white ">Source</th>
-                        <th className="fw0 pr0 ma3 bg-white ">Destintation</th>
-                        <th className="fw0 tl pr0 ma3 bg-white ">Date/Time of Travel  &  Hobbies</th>
-                        <th className="fw0 tl pa3 bg-white right">       </th>
+                        <th className="fw6 tl pa3 ma3 bg-white right">Profile Picture</th>
+                        <th className="fw6 tl pa3 bg-white right">Name</th>
+                        <th className="fw6 tl pa3  bg-white right">      Source</th>
+                        <th className="fw6 tl pa3 ma3 bg-white right">      Destintation</th>
+                        <th className="fw6 tl pa3 bg-white right">  Date of Travel</th>
+                        <th className="fw6 tl pa3 bg-white right"> Hobbies</th>
 
+                        <th className="fw6 tl pa3 bg-white right">  Action</th>
                     </tr>
                 </thead>
             </table>

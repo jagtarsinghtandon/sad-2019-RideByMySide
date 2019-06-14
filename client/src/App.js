@@ -124,7 +124,30 @@ class App extends Component {
   onAcceptedRides = (source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id) => {
     console.log("yeh kiya request accept" + source, destination, ride_accepted, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id)
 
-    console.log("yeh kiya request accept" + person_id, ride_id)
+    console.log("yeh kiya request accept" + person_id, ride_id, requested_person_id)
+
+
+
+    fetch('http://localhost:9000/checkacceptedride', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+
+        Logged_In_Person_Id: this.state.logged_in_person_id,   
+        Ride_Id: ride_id,
+        Requested_Person_Id: requested_person_id,
+        Ride_Status: 'accepted'
+      })
+    })
+
+      .then((response) => {
+        response.json()
+        if (response.status === 200)
+          alert("You have already accepted this ride")
+        
+          else {
 
 
     fetch('http://localhost:9000/acceptride', {
@@ -145,12 +168,34 @@ class App extends Component {
     alert('You have accepted the ride!!')
 
   }
+})
+}
 
   onRejectedRides = (source, destination, ride_rejected, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id) => {
     console.log("yeh kiya request accept" + source, destination, ride_rejected, date_of_travel, image, first_name, hobbies, person_id, ride_id, requested_person_id)
 
     console.log("yeh kiya request accept" + person_id, ride_id)
 
+    fetch('http://localhost:9000/checkrejectedride', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+
+        Logged_In_Person_Id: this.state.logged_in_person_id,  
+        Ride_Id: ride_id,
+        Requested_Person_Id: requested_person_id,
+        Ride_Status: 'rejected'
+      })
+    })
+
+      .then((response) => {
+        response.json()
+        if (response.status === 200)
+          alert("You have already rejected this ride")
+        
+          else {
 
     fetch('http://localhost:9000/acceptride', {
       method: 'put',
@@ -170,7 +215,8 @@ class App extends Component {
     alert('You have rejected the ride!!')
 
   }
-
+      })
+    }
   onFetchRequestedRides = () => {
 
     fetch('http://localhost:9000/fetchrequestedrides', {
@@ -205,6 +251,7 @@ class App extends Component {
 
 
   }
+  
 
   onSubmitAcceptedRejected = () => {
     const data = this.state.logged_in_person_id;
@@ -239,7 +286,7 @@ class App extends Component {
       },
       body: JSON.stringify({
 
-        Logged_In_Person_Id: this.state.logged_in_person_id,   //Here you will put person_ID of the logged in user (DO CHANGE IT LATER)
+        Logged_In_Person_Id: this.state.logged_in_person_id,   
         Ride_Id: ride_id
       })
     })
